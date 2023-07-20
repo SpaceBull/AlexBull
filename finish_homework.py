@@ -2707,4 +2707,3871 @@ if not family_data.have_a_house:
 
 
 family_data.info()
+#########################################################################
+#24.4.1
+class Toyota:
 
+    def __init__(self):
+        self.color = 'Красная'
+        self.price = '1000000'
+        self.max_speed = '200'
+        self.current_speed = '0'
+
+    def info(self):
+        print(
+            f'Цвет: {self.color},'
+            f'\nЦена: {self.price},'
+            f'\nМаксимальная скорость: {self.max_speed},'
+            f'\nТекущая скорость: {self.current_speed} '
+        )
+
+    def data_replacement(self, speed):
+        self.current_speed = speed
+
+
+car_toyota = Toyota()
+car_toyota.info()
+car_toyota.data_replacement(100)
+car_toyota.info()
+#########################################################################
+#24.4.2
+class Point:
+    count = 0
+
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+        Point.count += 1
+
+    def info(self, new_x, new_y):
+        self.x = new_x
+        self.y = new_y
+        print(f'x = {self.x}, y = {self.y}')
+        print(f'По счёту это {self.count} точка')
+
+
+data = Point()
+data.info(5, 4)
+data_2 = Point()
+data_2.info(0, 4)
+#########################################################################
+#24.4.3
+class Potato:
+    states = {0: 'Отсутствует', 1: 'Росток', 2: 'Зелёная', 3: 'Зрелая'}
+
+    def __init__(self, index):
+        self.index = index
+        self.state = 0
+
+    def grow(self):
+        if self.state < 3:
+            self.state += 1
+        self.print_state()
+
+    def is_ripe(self):
+        if self.state == 3:
+            return True
+        return False
+
+    def print_state(self):
+        print(f'Картошка {self.index} сейчас {Potato.states[self.state]} ')
+
+
+class Garden:
+
+    def __init__(self, count):
+        self.potatoes = [Potato(index) for index in range(1, count + 1)]
+
+    def grow_all(self):
+        print('Картошка прорастает')
+        for i_potato in self.potatoes:
+            i_potato.grow()
+
+    def are_all_ripe(self):
+        if not all([i_potato.is_ripe() for i_potato in self.potatoes]):
+            print('Картошка еще не созрела!\n')
+
+        else:
+            print('Вся картошка созрела. Можно собирать\n')
+            return True
+
+
+my_garden = Garden(5)
+for _ in range(3):
+    my_garden.grow_all()
+    my_garden.are_all_ripe()
+
+#########################################################################
+#24.1.PK
+import random
+
+
+class Warrior:
+    def __init__(self, name):
+        self.name = name
+        self.hp = 100
+        self.damage = 20
+
+    def fight(self, person):
+        if person.hp > 0:
+            person.hp -= self.damage
+            person.print_info()
+
+    def print_info(self):
+        if self.hp != 0:
+            print(f'У Персонажа {self.name} осталось {self.hp}хп')
+        else:
+            print(f'КОНЕЦ {self.name}')
+
+
+class Battle:
+    def __init__(self):
+        self.war_1 = Warrior(warriors[0])
+        self.war_2 = Warrior(warriors[1])
+
+    def fight_final(self):
+        for _ in range(20):
+            if self.war_1.hp == 0 or self.war_2.hp == 0:
+                break
+            else:
+                index_random = random.randint(0, 1)
+                if index_random == 0:
+                    print(f'\n{warriors[index_random]} наносит удар')
+                    self.war_1.fight(self.war_2)
+                else:
+                    print(f'\n{warriors[index_random]} наносит удар')
+                    self.war_2.fight(self.war_1)
+
+
+warriors = ['Чебурашка', 'Шапокляк']
+war_fight = Battle()
+war_fight.fight_final()
+#########################################################################
+#24.2.PK
+import random
+from operator import itemgetter
+
+
+class Student:
+    all_students = []
+
+    def __init__(self, data_name='Долматов Иван', number_of_group=3, grade=None):
+        self.data_name = data_name
+        self.number_of_group = number_of_group
+        self.grade = grade
+        self.all_students = list()
+
+    def adds_students(self):
+        Student.all_students.append([self.data_name, self.number_of_group, sorted(self.grade)])
+
+    def print_info(self):
+        roster = sorted(Student.all_students, key=itemgetter(2), reverse=True)
+        for i_elem in roster:
+            self.data_name = i_elem[0]
+            self.number_of_group = i_elem[1]
+            self.grade = i_elem[2]
+            print(f'Ученик {self.data_name} учится в группе {self.number_of_group} c оценками {self.grade}')
+
+
+for _ in range(10):
+    names = ['-', 'Коля', 'Александр', 'Дима', 'Николай', 'Иван']
+    surname = ['Брин', 'Долматов', 'Дондуков', 'Быков', 'Иванов', 'Петров', 'Печкин']
+    grade_student = [random.randint(2, 5) for _ in range(5)]
+    number_random = random.randint(1, 5)
+    number_surname = random.randint(0, 6)
+    the_name = ''.join(surname[number_surname] + ' ' + names[number_random])
+    new_student = Student(the_name, number_random, grade_student)
+    new_student.adds_students()
+
+
+result = Student()
+result.print_info()
+#########################################################################
+#24.3.PK
+import math
+
+
+class Circle:
+    def __init__(self, x=0, y=0, r=1):
+        self.x = x
+        self.y = y
+        self.r = r
+
+    def get_perimeter(self):
+        answer_perimeter = 2 * math.pi * self.r
+        print(answer_perimeter)
+
+    def get_square(self):
+        answer_square = math.pi * self.r ** 2
+        print(answer_square)
+
+    def increase_scale(self, k):
+        self.r *= k
+        print(self.r)
+
+    def is_intersect(self, other):
+        print((self.x - other.x) ** 2 + (self.y - other.y) ** 2 <= (self.r + other.r) ** 2)
+
+
+first_data = Circle()
+first_data.get_perimeter()
+first_data.get_square()
+first_data.increase_scale(2)
+second_data = Circle(1, 3, 2)
+first_data.is_intersect(second_data)
+#########################################################################
+#24.4.PK (Помогли www) сначала писал более умудренный сложный вариант
+import random
+
+
+def check_age(parent_age, age_kid):
+    if age_kid > parent_age - 16:
+        print('Возраст не похож на действительный')
+        return False
+    else:
+        return True
+
+
+class Parent:
+
+    def __init__(self, name_parent, age_parent, roster_of_kids):
+        self.name_parent = name_parent
+        self.age_parent = age_parent
+        self.roster_of_kids = []
+
+    def info_about_parent(self):
+        print(f'Меня зовут {self.name_parent}!, возраст мой - {self.age_parent}'
+              f' и у меня {len(self.roster_of_kids)} детей')
+
+    def soothe_the_child(self, children):
+        if child.state_calm == 1:
+            print(f'{self.name_parent}!  {children.name_child} кричит! ')
+            child.state_calm = 0
+        else:
+            print(f'{self.name_parent}! Твоё милое дитя, {children.name_child} в состоянии спокойствия! ')
+
+    def feed_the_child(self, children):
+        if child.state_feed == 1:
+            print(f'{self.name_parent}!  Твоё милое дитя, {children.name_child} хочет кушать! ')
+            child.state_feed = 0
+        else:
+            print(f'Чудесно, {self.name_parent}! Крошка {children.name_child} кушать не хочет! ')
+
+
+class Children:
+    calmness = {0: 'Спокоен', 1: 'Кричит'}
+    hunger = {0: 'Сыт', 1: 'Голоден'}
+
+    def __init__(self, name_child, age_child):
+        self.name_child = name_child
+        self.age_child = age_child
+        self.calmness = 0
+        self.hunger = 0
+
+    def info_about_child(self, calm, feed):
+        print(f'Дитя {self.name_child} сейчас {Children.calmness[calm]}')
+        print(f'Дитя {self.name_child} сейчас {Children.hunger[feed]}')
+
+
+name_parent = input('Как зовут Вас? ').title()
+age_parent = int(input(f'{name_parent} сколько лет? '))
+family = Parent(name_parent, age_parent, roster_of_kids=[])
+
+child_name_1 = input('\nКак зовут ребёнка? ').title()
+child_age_1 = int(input('Сколько лет ребёнку? '))
+if check_age(age_parent, child_age_1):
+    data_child = Children(child_name_1, child_age_1)
+    family.roster_of_kids.append(data_child)
+
+child_name_2 = input('\nКак зовут ребёнка? ')
+child_age_2 = int(input('Сколько лет ребёнку? '))
+if check_age(age_parent, child_age_2):
+    data_child = Children(child_name_2, child_age_2)
+    family.roster_of_kids.append(data_child)
+
+for child in family.roster_of_kids:
+    child.state_calm = random.randint(0, 1)
+    child.state_feed = random.randint(0, 1)
+    child.info_about_child(child.state_calm, child.state_feed)
+    family.soothe_the_child(child)
+    family.feed_the_child(child)
+
+#########################################################################
+#24.5.PK
+class Potato:
+    states = {0: 'Отсутствует', 1: 'Росток', 2: 'Зелёная', 3: 'Зрелая'}
+
+    def __init__(self, index):
+        self.index = index
+        self.state = 0
+
+    def grow(self):
+        if self.state < 3:
+            self.state += 1
+        self.print_state()
+
+    def is_ripe(self):
+        if self.state == 3:
+            return True
+        return False
+
+    def print_state(self):
+        print(f'Картошка {self.index} сейчас {Potato.states[self.state]} ')
+
+
+class Garden:
+
+    def __init__(self, count):
+        self.potatoes = [Potato(index) for index in range(1, count + 1)]
+
+    def grow_all(self):
+        print('Картошка прорастает')
+        for i_potato in self.potatoes:
+            i_potato.grow()
+
+    def are_all_ripe(self):
+        if not all([i_potato.is_ripe() for i_potato in self.potatoes]):
+            print('Картошка еще не созрела!\n')
+
+        else:
+            print('Вся картошка созрела. Можно собирать\n')
+            return True
+
+
+class Gardener:
+
+    def __init__(self, name_gardener, count):
+        self.name_gardener = name_gardener
+        self.count_potato = count
+        self.bed_potatoes = Garden(count)
+        self.harvested_potatoes = []
+
+    def care_of_the_garden(self):
+        print('Садовник начинает ухаживать за картошкой')
+        self.bed_potatoes.grow_all()
+
+    def harvest(self):
+        if self.bed_potatoes.are_all_ripe():
+            self.harvested_potatoes.append(self.count_potato)
+            print(f'Садовник {self.name_gardener} сегодня собрал урожай Картошки! Целых {self.count_potato} шт.')
+        else:
+            print(f'Еще рано Садовнику {self.name_gardener} собирать урожай! Расти Картошку')
+
+
+gardener_1 = Gardener('Коля', 5)
+for _ in range(3):
+    gardener_1.care_of_the_garden()
+
+gardener_1.harvest()
+#########################################################################
+#24.6.PK
+class ElementEarn:
+    def __init__(self):
+        self.element = 'Земля'
+
+    def __add__(self, other):
+        if other == 'Вода':
+            return 'Грязь'
+        if other == 'Воздух':
+            return 'Пыль'
+        if other == 'Огонь':
+            return 'Лава'
+        if other == 'Земля':
+            return 'Давление'
+        return other + self.element
+
+
+class ElementWater:
+    def __init__(self):
+        self.element = 'Вода'
+
+    def __add__(self, other):
+        if other == 'Земля':
+            return 'Грязь'
+        if other == 'Воздух':
+            return 'Шторм'
+        if other == 'Огонь':
+            return 'Пар'
+        if other == 'Вода':
+            return 'Озеро'
+        return other + self.element
+
+
+class ElementAir:
+    def __init__(self):
+        self.element = 'Воздух'
+
+    def __add__(self, other):
+        if other == 'Земля':
+            return 'Пыль'
+        if other == 'Вода':
+            return 'Шторм'
+        if other == 'Огонь':
+            return 'Молния'
+        if other == 'Воздух':
+            return 'Ветер'
+        return other + self.element
+
+
+class ElementFire:
+    def __init__(self):
+        self.element = 'Огонь'
+
+    def __add__(self, other):
+        if other == 'Земля':
+            return 'Лава'
+        if other == 'Воздух':
+            return 'Молния'
+        if other == 'Вода':
+            return 'Пар'
+        return other + self.element
+
+
+earn = ElementEarn()
+water = ElementWater()
+fire = ElementFire()
+air = ElementAir()
+
+answer = water + air
+print(answer)
+answer = earn + fire
+print(answer)
+answer = earn + earn
+print(answer)
+answer = fire + air
+print(answer)
+#########################################################################
+#24.7.PK
+import random
+
+
+class Human:
+
+    def __init__(self, name):
+        self.satiety = 50
+        self.house = House()
+        self.name = name
+
+    def to_eat(self):
+        self.house.refrigerator_with_food -= 5
+        self.satiety += 5
+
+    def work(self):
+        self.satiety -= 5
+        self.house.money += 10
+
+    def play(self):
+        self.satiety -= 5
+
+    def visit_the_store(self):
+        self.house.refrigerator_with_food += 10
+        self.house.money -= 5
+
+    def info(self):
+        print(f'Человек по имени {self.name} имеет: \n'
+              f'Сытость: {self.satiety}\n'
+              f'Еды: {self.house.refrigerator_with_food}\n'
+              f'Денег: {self.house.money}')
+
+
+class House:
+
+    def __init__(self):
+        self.refrigerator_with_food = 50
+        self.money = 0
+
+
+man_vasya = Human('Вася')
+man_nastya = Human('Настя')
+
+
+def life(man):
+    day = 0
+    for day in range(366):
+        number = random.randint(1, 6)
+        if man.satiety < 20:
+            if man.satiety < 0:
+                print('\nЧеловек умер(\n')
+                break
+            man.to_eat()
+        elif man.house.refrigerator_with_food < 20:
+            man.visit_the_store()
+        elif man.house.money < 50:
+            man.work()
+        elif number == 1:
+            man.work()
+        elif number == 2:
+            man.to_eat()
+        else:
+            man.play()
+    man.info()
+    print(f'Прожил этот человек {day}\n')
+
+
+life(man_vasya)
+life(man_nastya)
+#########################################################################
+#24.8.PK
+import random
+
+
+class Card:
+    def __init__(self):
+        self.name_card = [
+            'Двойка', 'Тройка', 'Четвёрка', 'Пятерка', 'Шестёрка',
+            'Семёрка', 'Восьмерка', 'Девятка', 'Десятка', 'Валет',
+            'Дама', 'Король', 'Туз'
+        ]
+        self.card_weight = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
+
+
+class Deck:
+    def __init__(self):
+        self.player = Card()
+
+    def add_a_card(self):
+        index_card = random.randint(0, 12)
+        return self.player.name_card[index_card], self.player.card_weight[index_card]
+
+    def play(self, person, computer):
+        while True:
+            if computer <= 19:
+                print('Компьютер берет 1 карту')
+                new_card = self.add_a_card()
+                computer += new_card[1]
+                continue
+            if person <= 19:
+                new_card = input('\nВзять карту? (да или нет): ').lower()
+                if new_card == 'да':
+                    new_card = self.add_a_card()
+                    person += new_card[1]
+                    print(f'Выпала тебе карта {new_card[0]} и теперь стало {person}\n')
+                else:
+                    return person, computer
+            else:
+                return person, computer
+
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+
+    def info(self):
+        deck = Deck()
+        second_card = deck.add_a_card()
+        first_card = deck.add_a_card()
+        summ_card = second_card[1] + first_card[1]
+        print(f'У Игрока {self.name} две карты: {second_card[0]} и {first_card[0]}')
+        print(f'В сумме {summ_card} очков\n')
+        return summ_card
+
+
+man = Player('Вася')
+bot = Player('Компьютер')
+
+copy_person = man.info()
+copy_bot = bot.info()
+card = Deck()
+
+player = card.play(copy_person, copy_bot)
+person = player[0]
+bot_1 = player[1]
+
+while True:
+    if bot_1 > 21:
+        if person <= 21:
+            print(f'У компьютера {bot_1} а у тебя {person} - Ты выйграл!')
+    elif person > 21:
+        if bot_1 <= 21:
+            print(f'У компьютера {bot_1} а у тебя {person} - Компьютер выйграл!')
+    elif person == bot_1 or bot_1 and person > 21 :
+        print(f'У компьютера {bot_1} а у тебя {person} - Ничья')
+    elif person == 21:
+        print(f'У компьютера {bot_1} а у тебя {person} - Ты выйграл!')
+    elif bot_1 == 21:
+        print(f'У компьютера {bot_1} а у тебя {person} - Компьютер выйграл!')
+    break
+#########################################################################
+#24.9.PK
+class Cell:
+    grid_cells = {
+        1: ' ', 2: ' ', 3: ' ',
+        4: ' ', 5: ' ', 6: ' ',
+        7: ' ', 8: ' ', 9: ' '
+    }
+
+    def __init__(self, number_cell):
+        self.number_cell = number_cell
+
+    def checks_the_cell(self, cell_symbol):
+        for key, value in Cell.grid_cells.items():
+            if key == self.number_cell:
+                if value == ' ':
+                    Cell.grid_cells[self.number_cell] = cell_symbol
+                    example_board = Board(cell_symbol)
+                    example_board.info_result()
+                else:
+                    print('Клетка занята')
+
+
+class Board:
+    flag = False
+    count = 0
+
+    def __init__(self, cell_symbol):
+        self.symbol = [cell_symbol for _ in range(3)]
+
+    def info_result(self):
+        Board.count += 1
+        copy_cell = list(Cell.grid_cells.values())
+        line_1 = copy_cell[:3]
+        line_2 = copy_cell[3:6]
+        line_3 = copy_cell[6:9]
+        line_4 = copy_cell[0::4]
+        line_5 = copy_cell[2:7:2]
+        line_6 = copy_cell[2::3]
+        line_7 = copy_cell[0::3]
+        line_8 = copy_cell[1::3]
+        print('\n', line_1, '\n', line_2, '\n', line_3)
+        if line_1 == self.symbol or line_2 == self.symbol or line_3 == self.symbol or line_4 == self.symbol or \
+                line_5 == self.symbol or line_6 == self.symbol or line_7 == self.symbol or line_8 == self.symbol:
+            print('Победа!\n')
+            Board.flag = True
+        elif Board.count == 9:
+            print('Ничья!\n')
+            Board.flag = True
+
+
+class Player:
+    def __init__(self, name, cell_symbol):
+        self.name = name
+        self.cell_symbol = cell_symbol
+
+    def cell_number(self, cell_number):
+        print(f'{self.name} ходит на {cell_number} клетку')
+        temp = Cell(cell_number)
+        temp.checks_the_cell(self.cell_symbol)
+
+
+print('Номера ячеек:')
+print('[1 2 3]\n[4 5 6]\n[7 8 9]')
+player_1 = Player('Алекс', 'X')
+player_2 = Player('Ника', 'O')
+while not Board.flag:
+    choice = int(input('Введите номер ячейки: '))
+    player_2.cell_number(choice)
+    choice = int(input(f'Введите номер ячейки: '))
+    player_1.cell_number(choice)
+#########################################################################
+#25.1.1
+import math
+
+
+class Circle:
+
+    def __init__(self, x=0, y=0, r=1):
+        self.set_x(x)
+        self.set_y(y)
+        self.__r = r
+
+    def __str__(self):
+        return f'x == {self.__x}, y == {self.__y} r == {self.__r}'
+
+    def get_x(self):
+        return self.__x
+
+    def set_x(self, x):
+        if isinstance(x, int):
+            self.__x = x
+        else:
+            raise Exception('Х должен быть числом')
+
+    def get_y(self):
+        return self.__y
+
+    def set_y(self, y):
+        if isinstance(y, int):
+            self.__y = y
+        else:
+            raise Exception('Y должен быть числом')
+
+    def perimeter(self):
+        answer_perimeter = 2 * math.pi * self.__r
+        print(answer_perimeter)
+
+    def square(self):
+        answer_square = math.pi * self.__r ** 2
+        print(answer_square)
+
+    def increase_scale(self, k):
+        self.__r *= k
+        print(self.__r)
+
+    def is_intersect(self, other):
+        print((self.__x - other.__x) ** 2 + (self.__y - other.__y) ** 2 <= (self.__r + other.__r) ** 2)
+
+
+first_data = Circle(0, 0, 1)
+print(first_data) # str+
+first_data.perimeter()
+first_data.square()
+first_data.increase_scale(2)
+print(first_data.get_x())
+print(first_data.get_y())
+second_data = Circle(1, 3, 2)
+first_data.is_intersect(second_data)
+#########################################################################
+#25.1.2
+class Person:
+    __count = 0
+
+    def __init__(self, name, age):
+        self.__name = ''
+        self.__age = 0
+        self.set_age(age)
+        self.set_name(name)
+        Person.__count += 1
+
+    def __str__(self):
+        return f'Имя: {self.__name}, возраст: {self.__age}'
+
+    def get_name(self):
+        return self.__name
+
+    def get_age(self):
+        return self.__age
+
+    def set_age(self, age):
+        if age in range(0, 100):
+            self.__age = age
+        else:
+            raise Exception('Такого возраста не существует')
+
+    def set_name(self, name):
+        if isinstance(name, str) and name.isalpha():
+            self.__name = name
+        else:
+            raise Exception('Имя должно быть без цифр и быть строкой')
+
+
+man = Person('Коля', 23)
+man_2 = Person('Вася', 14)
+man.set_name('Николай')
+man.set_age(35)
+print(man)
+print(Person._Person__count) # Несмотря на выделенный цвет он выводит инфу - но так делать не стоит
+#########################################################################
+#25.2.1
+class Ship:
+    __count_ships = 0
+
+    def __init__(self, model):
+        self.__model = model
+        Ship.__count_ships += 1
+
+    def __str__(self):
+        return f'Корабль {self.__model} с номером {Ship.__count_ships}'
+
+    def sail(self):
+        print(f'Корабль {self.__model} пошёл по воде')
+
+
+class CargoShip(Ship):
+
+    def __init__(self, model, fullness=0):
+        super().__init__(model)
+        self.fullness = fullness
+
+    def load(self):
+        self.fullness += 1
+        print(f'Загруженность {self.fullness}')
+
+    def upload(self):
+        if self.fullness > 0:
+            self.fullness -= 1
+            print(f'Загруженность {self.fullness}')
+        else:
+            raise Exception('Корабль уже разгружен')
+
+
+class Warship(Ship):
+
+    def __init__(self, model, weapon):
+        super().__init__(model)
+        self.weapon = weapon
+
+    def attack(self):
+        print(f'Корабль стреляет из {self.weapon}')
+
+
+a = Warship('tr33', 'пушка')
+print(a)
+a.attack()
+a.sail()
+b = CargoShip('admiral')
+b.load()
+b.upload()
+#########################################################################
+#25.2.2
+class Robot:
+    __countRobot = 0
+
+    def __init__(self, model):
+        self.model = model
+        Robot.__countRobot += 1
+
+    def operate(self):
+        print('Пылесос поехал по кругу')
+
+
+class RobotCleaner(Robot):
+
+    def __init__(self, model, rubbish=0):
+        super().__init__(model)
+        self.rubbish = rubbish
+
+    def operate(self):
+        self.rubbish += 1
+        print(f'Робот пылесос {self.model}, заполненность мешка - {self.rubbish}')
+
+
+class MilitaryRobot(Robot):
+
+    def __init__(self, model, weapon):
+        super().__init__(model)
+        self.weapon = weapon
+
+    def operate(self):
+        print(f'я {self.model}, приступаю защищать военный объект с помощью {self.weapon}')
+
+
+class RobotSubmarine(MilitaryRobot):
+
+    def __init__(self, model, weapon, depth):
+        super().__init__(model, weapon)
+        self.depth = depth
+
+    def operate(self):
+        super().operate()
+        print(f'Охрана роботом {self.model} ведётся под водой на глубине {self.depth}')
+
+
+a = RobotCleaner('Домашний')
+a.operate()
+b = MilitaryRobot('Сибирь', 'Кинжал')
+b.operate()
+c = RobotSubmarine('Akula', 'Сатана', 3)
+c.operate()
+#########################################################################
+#25.2.3
+class DivisionError(Exception):
+    pass
+
+
+file = open('number.txt', 'r', encoding='utf8')
+for line in file:
+    a = line.split() # a rstrip удаляет на конце лишние символы
+    answer = int(a[0]) / int(a[1])
+    print(f'{a[0]} : {a[1]} = {answer}')
+    if int(a[0]) < int(a[1]):
+        raise DivisionError('Нельзя делить меньшее на большее')
+
+#########################################################################
+#25.3
+class Unit:
+
+    def __init__(self, hp, damag=0):
+        self.hp = hp
+        self.damag = damag
+
+    def damage(self):
+        self.hp -= 0
+
+
+class Soldier(Unit):
+
+    def __init__(self, hp, damag):
+        super().__init__(hp, damag)
+
+    def __str__(self):
+        return f'У Солдата {self.hp} ХП урон по нему составил {self.damage()}'
+
+    def damage(self):
+        self.hp -= self.damag
+        return self.hp
+
+
+class Citizen(Unit):
+    def __init__(self, hp, damag):
+        super().__init__(hp, damag)
+
+    def __str__(self):
+        return f'У Гражданского {self.hp} ХП урон по нему составил {self.damage()}'
+
+    def damage(self):
+        self.damag *= 2
+        self.hp -= self.damag
+        return self.hp
+
+
+a = Soldier(hp=200, damag=20)
+print(a)
+b = Citizen(hp=300, damag=15)
+print(b)
+#########################################################################
+#25.3(моё выше - а это наставника)
+class Unit:
+
+    def __init__(self, hp):
+        self.__hp = hp
+
+    def set_hp(self, amount):
+        self.__hp = amount
+
+    def get_hp(self):
+        return self.__hp
+
+    def get_damage(self, amount):
+        self.set_hp(self.get_hp() - 0)  # -0 написан для наглядности, в теории мы могли бы этого и не писать
+
+
+class Soldier(Unit):
+
+    def get_damage(self, amount):
+        self.set_hp(self.get_hp() - amount)
+
+
+class Citizen(Unit):
+    def get_damage(self, amount):
+        self.set_hp(self.get_hp() - amount * 2)
+
+#########################################################################
+#25.4
+class CanFly:
+
+    def __init__(self):
+        self.height = 0
+        self.speed = 0
+
+    def fly_up(self):
+        pass
+
+    def fly(self):
+        pass
+
+    def land(self):
+        self.height = 0
+        self.speed = 0
+
+    def __str__(self):
+        return f'Находится на высоте: {self.height}, и данная скорость: {self.speed}'
+
+
+class Butterfly(CanFly):
+
+    def fly_up(self):
+        self.height = 1
+
+    def fly(self):
+        self.speed = 0.5
+
+
+class Rocket(CanFly):
+
+    def fly_up(self):
+        self.height = 500
+        self.speed = 1000
+
+    def land(self):
+        self.height = 0
+        print('БА-БАХ!')
+
+    def explode(self):
+        pass
+#########################################################################
+#25.PK 1
+
+class Property:
+    """
+    Базовый класс - характеризующий собственность,
+
+    __worth: собственный капитал
+    """
+    __worth = 0
+
+    def designer(self, price):
+        """
+        Конструктор для высчитывания налога с собственного капитала.
+
+        :param price: приходящий подсчитанный налог.
+        :type price: int
+        """
+        print(f'\nБаланс вашего счёта: {Property.__worth} руб')
+        print(f'Налог составит: {price} руб.')
+        Property.__worth -= price
+        if Property.__worth < 0:
+            print(f'!!Вам необходимо набрать {abs(Property.__worth)} руб. для оплаты налога!!')
+
+    def set_worth(self, capital):
+        """
+        Сеттер для установления собственного капитала
+
+        :param capital: собственный капитал
+        :type capital: int
+        :raise Exception: Если собственного капитала меньше ноля, то вызывается исключение
+        """
+        if capital > 0:
+            Property.__worth = capital
+        else:
+            raise Exception('На вашем счету недостаточно средств, для оплаты налога!')
+
+
+class Apartment(Property):
+    """
+    Класс Квартира. Родитель Property
+
+    :arg
+        tax_calculation(int) - передаётся стоимость квартиры
+    """
+    def __init__(self, price_apartament):
+        self.tax_calculation(price_apartament)
+    """
+    метод tax_calculation() - Считает налог на квартиру
+    и передает значение в designer(Конструктор) родительского класса
+    :arg
+        :type price_apartament : int
+    :return: передает подсчитанный налог в designer(Конструктор) родительского класса 
+    """
+    def tax_calculation(self, price_apartament):
+        price_apartament /= 1000
+        return super().designer(price_apartament)
+
+
+class Car(Property):
+    """
+    Класс Машина. Родитель Property
+
+    :arg
+        tax_calculation(int) - передаётся стоимость машины
+    """
+    def __init__(self, price_car):
+        self.tax_calculation(price_car)
+    """
+    метод tax_calculation() - Считает налог на машину
+    и передает значение в designer(Конструктор) родительского класса
+    :arg
+        :type price_car : int
+    :return: передает подсчитанный налог в designer(Конструктор) родительского класса 
+    """
+    def tax_calculation(self, price_car):
+        price_car /= 200
+        return super().designer(price_car)
+
+
+class CountryHouse(Property):
+    """
+    Класс Дача. Родитель Property
+
+    :arg
+        tax_calculation(int) - передаётся стоимость дачи
+    """
+    def __init__(self, price_country_house):
+        self.tax_calculation(price_country_house)
+
+    """
+    метод tax_calculation() - Считает налог на дачу
+    и передает значение в designer(Конструктор) родительского класса
+    :arg
+        :type price_country_house : int
+    :return: передает подсчитанный налог в designer(Конструктор) родительского класса 
+    """
+    def tax_calculation(self, price_country_house):
+        price_country_house /= 500
+        return super().designer(price_country_house)
+
+
+money = int(input('Введите количество ваших денег: '))
+value_apartament = int(input('Введите стоимость вашей квартиры: '))
+value_car = int(input('Введите стоимость вашего автомобиля: '))
+value_country_house = int(input('Введите стоимость вашей дачи: '))
+
+
+my_money = Property()
+my_money.set_worth(money)
+my_first_property = Apartment(price_apartament=value_apartament)
+my_second_property = Car(price_car=value_car)
+my_third_property = CountryHouse(price_country_house=value_country_house)
+#########################################################################
+#25.PK 2
+# Импортируем модуль для генерации случайных чисел
+import random
+
+
+# Создаем классы исключений
+class KillError(Exception):
+    pass
+
+
+class DrunkError(Exception):
+    pass
+
+
+class CarCrashError(Exception):
+    pass
+
+
+class GluttonyError(Exception):
+    pass
+
+
+class DepressionError(Exception):
+    pass
+
+
+# Создаем функцию, которая возвращает количество кармы от 1 до 7 и может выкинуть исключение с вероятностью 1 к 10
+def analyzes_the_day():
+    # Генерируем случайное число от 1 до 10
+    exception_probability_number = random.randint(1, 10)
+    # Если число равно 1, то выбрасываем одно из исключений
+    if exception_probability_number == 1:
+        # Создаем список из классов исключений
+        errors = [KillError, DrunkError, CarCrashError, GluttonyError, DepressionError]
+        # Выбираем случайный класс из списка
+        error = random.choice(errors)
+        # Выбрасываем исключение этого класса
+        raise error()
+    # Иначе возвращаем случайное число от 1 до 7 как количество кармы
+    else:
+        return random.randint(1, 7)
+
+
+# Создаем константу для уровня кармы, необходимого для просветления
+ENLIGHTENMENT = 500
+# Создаем переменную для хранения текущего уровня кармы
+karma = 0
+# Открываем файл для записи логов об исключениях
+log_file = open('karma.log', 'w')
+
+# Создаем бесконечный цикл по набору кармы
+while True:
+    # Пытаемся вызвать функцию analyzes_the_day() и прибавить ее результат к текущему уровню кармы
+    try:
+        karma += analyzes_the_day()
+        print(f'Текущий уровень кармы: {karma}')
+    # Ловим исключения разных классов и записываем их в файл с помощью метода write()
+    except KillError:
+        log_file.write('KillError\n')
+        print('Вы убили живое существо!')
+    except DrunkError:
+        log_file.write('DrunkError\n')
+        print('Вы напились!')
+    except CarCrashError:
+        log_file.write('CarCrashError\n')
+        print('Вы попали в аварию!')
+    except GluttonyError:
+        log_file.write('GluttonyError\n')
+        print('Вы объелись!')
+    except DepressionError:
+        log_file.write('DepressionError\n')
+        print('Вы впали в депрессию!')
+
+    # Проверяем, достиг ли текущий уровень кармы необходимого для просветления значения константы ENLIGHTENMENT
+    if karma >= ENLIGHTENMENT:
+        # Если да, то выводим сообщение о просветлении и выходим из цикла с помощью оператора break
+        print(f'Поздравляем! Вы достигли просветления с уровнем кармы {karma}!')
+        break
+
+# Закрываем файл после выхода из цикла с помощью метода close()
+log_file.close()
+#########################################################################
+#25.PK 3
+class MyDict(dict):
+    """
+    Класс МойСловарь. Родитель: dict
+    """
+    def get(self, key, default=None):
+        """
+            Метод, который ищет значение от ключа (key) в словаре.
+        :param key: передается ключ из словаря.
+        :param default: значение, которое возвращается если нет искомого ключа в словаре.
+        :return: возвращаем через родительский класс (dict) значение от ключа(key), но если его нет,
+        возвращаем default которому мы присвоили значение '0'
+        """
+        return super(MyDict, self).get(key, 0)
+
+
+b = MyDict({1: 'Gt', 2: 'rs'})
+print(b.get(key=1))
+print(b.get(key=3))
+#########################################################################
+#25.PK 4(1)
+import random
+
+
+class Hero:
+    # Базовый класс, который не подлежит изменению
+    # У каждого наследника будут атрибуты:
+    # - Имя
+    # - Здоровье
+    # - Сила
+    # - Жив ли объект
+    # Каждый наследник будет уметь:
+    # - Атаковать
+    # - Получать урон
+    # - Выбирать действие для выполнения
+    # - Описывать своё состояние
+    max_hp = 150
+    start_power = 10
+
+    def __init__(self, name):
+        self.name = name
+        self.__hp = self.max_hp
+        self.__power = self.start_power
+        self.__is_alive = True
+
+    def get_hp(self):
+        return self.__hp
+
+    def set_hp(self, new_value):
+        self.__hp = max(new_value, 0)
+
+    def get_power(self):
+        return self.__power
+
+    def set_power(self, new_power):
+        self.__power = new_power
+
+    def is_alive(self):
+        return self.__is_alive
+
+    # Все наследники должны будут переопределять каждый метод базового класса (кроме геттеров/сеттеров)
+    # Переопределенные методы должны вызывать методы базового класса (при помощи super).
+    # Методы attack и str базового класса можно не вызывать (т.к. в них нету кода).
+    # Они нужны исключительно для наглядности.
+    # Метод make_a_move базового класса могут вызывать только герои, не монстры.    def attack(self, target):
+        # Каждый наследник будет наносить урон согласно правилам своего класса
+    def take_damage(self, damage):
+        # Каждый наследник будет получать урон согласно правилам своего класса
+        # При этом у всех наследников есть общая логика, которая определяет жив ли объект.
+        print("\t", self.name, "Получил удар с силой равной = ", round(damage),
+              ". Осталось здоровья - ", round(self.get_hp()))
+        # Дополнительные принты помогут вам внимательнее следить за боем и изменять стратегию,
+        # чтобы улучшить выживаемость героев
+        if self.get_hp() <= 0:
+            self.__is_alive = False
+
+    def make_a_move(self, friends, enemies):
+        # С каждым днём герои становятся всё сильнее.
+        self.set_power(self.get_power() + 0.1)
+
+    def __str__(self):
+        return 'Name: {0} | HP: {1}'.format(self.name, self.get_hp())
+
+
+class Healer(Hero):
+    # Целитель:
+    # Атрибуты:
+    def __init__(self, name):
+        super().__init__(name)
+        self.magic_power = self.get_power() * 3
+    # - магическая сила - равна значению НАЧАЛЬНОГО показателя силы умноженному на 3 (self.__power * 3)
+    # Методы:
+
+    def attack(self, target):
+        target.take_damage(self.get_power() / 2)
+        # - атака - может атаковать врага, но атакует только в половину силы self.__power
+
+    def take_damage(self, damage):
+        self.set_hp(self.get_hp() - (1.2 * damage))
+        super().take_damage(damage)
+    # - получение урона - т.к. защита целителя слаба - он получает на 20% больше урона (1.2 * damage)
+
+    def healing(self, target):
+        target.set_hp(target.get_hp() + self.magic_power)
+    # - исцеление - увеличивает здоровье цели на величину равную своей магической силе
+
+    def make_a_move(self, friends, enemies):
+        print(self.name, end=' ')
+        target_of_potion = friends[0]
+        min_health = target_of_potion.get_hp()
+        for friend in friends:
+            if friend.get_hp() < min_health:
+                target_of_potion = friend
+                min_health = target_of_potion.get_hp()
+        if min_health < 130 and self.magic_power > 0:
+            print("Исцеляю", target_of_potion.name)
+            self.healing(target_of_potion)
+        else:
+            if not enemies:
+                return
+            print("Атакую ближнего -", enemies[0].name)
+            self.attack(enemies[0])
+            print('\n')
+        # - выбор действия - получает на вход всех союзников и всех врагов и на основе своей стратегии
+        # выполняет ОДНО из действий (атака,    # исцеление) на выбранную им цель
+
+
+class Tank(Hero):
+    # Танк:
+    # Атрибуты:
+    def __init__(self, name):
+        super().__init__(name)
+        self.defense = 1
+        self.shield = False
+        # - показатель защиты - изначально равен 1, может увеличиваться и уменьшаться
+        # - поднят ли щит - танк может поднимать щит, этот атрибут должен показывать поднят ли щит в данный момент
+    # Методы:
+
+    def attack(self, target):
+        target.take_damage(self.get_power() / 2)
+        # - атака - атакует, но т.к. доспехи очень тяжелые - наносит половину урона (self.__power)
+
+    def take_damage(self, damage):
+        self.set_hp(self.get_hp() - (damage / self.defense))
+        super().take_damage(damage)
+    # - получение урона - весь входящий урон делится на показатель защиты (damage/self.defense) и
+    # только потом отнимается от здоровья
+
+    def shield_up(self):
+        self.shield = True
+        print('Поднимаю щит')
+        self.defense *= 2
+        self.set_power(self.get_power() / 2)
+
+    def shield_down(self):
+        self.shield = False
+        print('Опускаю щит')
+        self.defense /= 2
+        self.set_power(self.get_power() * 2)
+    # - поднять щит - если щит не поднят - поднимает щит. Это увеличивает показатель брони в 2 раза, но
+    # уменьшает показатель силы в 2 раза.
+    # - опустить щит - если щит поднят - опускает щит. Это уменьшает показатель брони в 2 раза, но увеличивает
+    # показатель силы в 2 раза.
+
+    def make_a_move(self, friends, enemies):
+        print(self.name, end=' ')
+        if not enemies:
+            return
+        if self.defense > 2:
+            self.shield_down()
+        else:
+            print("Атакую без щита -", enemies[0].name)
+            self.attack(enemies[0])
+            self.shield_up()
+        print('\n')
+        # - выбор действия - получает на вход всех союзников и всех врагов и на основе своей стратегии выполняет
+        # ОДНО из действий (атака,
+        # поднять щит/опустить щит) на выбранную им цель
+
+
+class Attacker(Hero):
+    # Убийца:
+    # Атрибуты:
+    def __init__(self, name):
+        super().__init__(name)
+        self.power_multiply = 1
+    # - коэффициент усиления урона (входящего и исходящего)
+
+    def get_power_multiply(self):
+        return round(self.power_multiply, 2)
+
+    def set_power_multiply(self, new_power):
+        self.power_multiply = round(new_power, 2)
+
+    # Методы:
+    def attack(self, target):
+        target.take_damage(self.get_power() * self.power_multiply)
+        self.power_down()
+        # - атака - наносит урон равный показателю силы (self.__power)
+        # умноженному на коэффициент усиления урона (self.power_multiply)
+        # после нанесения урона - вызывается метод ослабления power_down.
+
+    def take_damage(self, damage):
+        self.set_hp(self.get_hp() - (damage * self.power_multiply / 2))
+        super().take_damage(damage)
+    # - получение урона - получает урон равный входящему урона умноженному на половину коэффициента усиления урона -
+    # damage * (self.power_multiply / 2)
+
+    def power_up(self):
+        self.set_power_multiply(self.power_multiply * 2)
+        # - усиление (power_up) - увеличивает коэффициента усиления урона в 2 раза
+
+    def power_down(self):
+        self.set_power_multiply(self.power_multiply / 2)
+        # - ослабление (power_down) - уменьшает коэффициента усиления урона в 2 раза
+
+    def make_a_move(self, friends, enemies):
+        print(self.name, end=' ')
+        target = random.choice(enemies)
+        if self.get_power_multiply() < 2:
+            print('Баф на усиление Атаки')
+            self.power_up()
+        else:
+            print("Атака!!! Уровень урона - " + str(self.get_power()) + " Случайно атакую -", target.name)
+            print()
+            self.attack(target)
+        if not enemies:
+            return
+        print('\n')
+        # - выбор действия - получает на вход всех союзников и всех врагов и на основе своей
+        # стратегии выполняет ОДНО из действий (атака,
+        # усиление, ослабление) на выбранную им цель
+#########################################################################
+#25.PK 4(2)
+import random
+#from monsters import MonsterBerserk, MonsterHunter СнЯТЬ решетки
+#from heroes import Tank, Healer, Attacker
+
+
+def one_year_of_war():
+    # Ниже приведен пример составления команды
+    # Вы можете изменять состав команды, НО размер команды не должен быть более 5.
+
+    tank = Tank("Танк Пётр")
+    attacker = Attacker("Убийца Ольга")
+    second_attacker = Attacker("Убийца Траур")
+    healer = Healer("Монах Игнат")
+    second_healer = Healer("Монах Ирэна")
+    good_team = [tank, attacker, second_attacker, second_healer, healer]
+
+    # Код ниже изменять нельзя!
+
+    # Функция запускает симуляцию одного года сражений.
+    # В цикле запускается 365 итераций (1 итерация = 1 день)
+    # Каждый день каждый герой и монстр выбирают и совершают ОДНО действие.
+    # Если монстры умирают - они пропадают из списка
+    # Если умирают герои - цикл завершается - битва считается проигранной (возвращается 0)
+    # Если герои выживают - битва считается выигранной (возвращается 1)
+    if sum([isinstance(hero, (MonsterHunter, MonsterBerserk)) for hero in good_team]) > 1:
+        print("В команде героев может быть только 1 монстр!")
+        return 0
+
+    evil_names = ["Абвыргл", "Мефисто", "Драник", "Диабло", "Пусечка", "Стаут"]
+    mob_warrior = MonsterBerserk("Берсерк " + random.choice(evil_names))
+    mob_ranger = MonsterHunter("Рейнджер " + random.choice(evil_names))
+    evil_team = [mob_warrior, mob_ranger]
+
+    for day in range(1, 366):
+        print("=" * 50 + "\nНачало дня №" + str(day) + "\n" + "=" * 50)
+
+        # В циклах у героев и монстров вызывается метод make_a_move, который должен выбирать и совершать одно действие
+        # Для наглядности вы можете добавлять в каждое действие принты с подробностями (чтобы знать кто когда и что совершает)
+        # При помощи этой информации вы сможете искать проблемы и ошибки в вашем коде и в конечном итоге это поможет вам улучшить стратегию
+        print("\nКоманда добра:\n" + '-' * 50)
+        for hero in good_team:
+            hero.make_a_move(good_team, evil_team)
+
+        print("\nКоманда зла:\n" + '-' * 50)
+        for mob in evil_team:
+            mob.make_a_move(evil_team, good_team)
+
+        print(f"Итоги дня сражений №{day}")
+
+        # В итогах дня у каждого героя и каждого монстра вызывается метод __str__ который должен описывать их текущее состояние
+        print("\nКоманда добра:\n" + '-' * 50)
+        for hero in good_team:
+            print(hero)
+
+        print("\nКоманда зла:\n" + '-' * 50)
+        for mob in evil_team:
+            print(mob)
+
+        # Мёртвые монстры удаляются из списка
+        evil_team = [mob for mob in evil_team if mob.is_alive()]
+        # Новые монстры в чётные дни добавляются в список (но их не может быть больше 4)
+        if day % 2 == 0 and len(evil_team) < 4:
+            newborn_evils = [MonsterBerserk("Берсерк " + random.choice(evil_names)), MonsterHunter("Рейнджер " + random.choice(evil_names))]
+            evil_team.append(random.choice(newborn_evils))
+
+        if any([not hero.is_alive() for hero in good_team]):
+            print("Вы проиграли!")
+            return 0
+        else:
+            print("Сражение продолжается!")
+
+    else:
+        print("Вы одержали победу!")
+        return 1
+
+
+# Код ниже не подлежит изменению
+# Он запускает 20 симуляций. Для зачёта по заданию вам надо стабильно набирать 10 или более побед.
+count_of_wins = 0
+for year in range(1, 21):
+    count_of_wins += one_year_of_war()
+
+print("Из 20 раз команда героев одержала", count_of_wins, "побед")
+if count_of_wins < 10:
+    print("Героям нужна другая тактика, попробуйте ещё!")
+else:
+    print("Герои готовы к реальному сражению, задание выполнено!")
+
+#########################################################################
+#25.PK 4(3)
+import random
+
+
+class Monster:
+    max_hp = 150
+    start_power = 10
+
+    def __init__(self, name):
+        self.name = name
+        self.__hp = self.max_hp
+        self.__power = self.start_power
+        self.__is_alive = True
+
+    def get_hp(self):
+        return self.__hp
+
+    def set_hp(self, new_value):
+        self.__hp = max(new_value, 0)
+
+    def get_power(self):
+        return self.__power
+
+    def set_power(self, new_power):
+        self.__power = new_power
+
+    def attack(self, target):
+        pass
+
+    def is_alive(self):
+        return self.__is_alive
+
+    def take_damage(self, damage):
+        print("\t", self.name, "Получил удар с силой равной = ", round(damage), ". Осталось здоровья - ", round(self.get_hp()))
+        if self.get_hp() <= 0:
+            self.__is_alive = False
+
+    def make_a_move(self, friends, enemies):
+        pass
+
+    def __str__(self):
+        return 'Name: {0} | HP: {1}'.format(self.name, self.get_hp())
+
+
+class MonsterBerserk(Monster):
+
+    def __init__(self, name):
+        super().__init__(name)
+        self.madness = 1
+
+    def attack(self, target):
+        target.take_damage(self.get_power() * self.madness)
+        self.madness += 0.1
+
+    def take_damage(self, power):
+        self.set_hp(self.get_hp() - power * (self.madness / 2))
+        if self.get_hp() < 50:
+            self.madness *= 2
+        super().take_damage(power)
+
+    def make_a_move(self, friends, enemies):
+        print(self.name, end=' ')
+        self.madness = min(self.madness, 4)
+        if not enemies:
+            return
+        if self.madness < 3:
+            print("Атакую того, кто стоит ближе -", enemies[0].name)
+            self.attack(enemies[0])
+        else:
+            target = random.choice(enemies)
+            print("BERSERK MODE!!! Уровень безумия - " + str(self.madness) + " Случайно атакую -", target.name)
+            print()
+            self.attack(target)
+        print('\n')
+
+
+class MonsterHunter(Monster):
+
+    def __init__(self, name):
+        super().__init__(name)
+        self.potions = 10
+
+    def attack(self, target):
+        target.take_damage(self.get_power() + (10 - self.potions))
+
+    def take_damage(self, power):
+        self.set_hp(self.get_hp() - power)
+        if random.randint(1, 10) == 1:
+            self.potions -= 1
+        super().take_damage(power)
+
+    def give_a_potion(self, target):
+        self.potions -= 1
+        target.set_hp(target.get_hp() + self.get_power())
+
+    def make_a_move(self, friends, enemies):
+        print(self.name, end=' ')
+        target_of_potion = friends[0]
+        min_health = target_of_potion.get_hp()
+        for friend in friends:
+            if friend.get_hp() < min_health:
+                target_of_potion = friend
+                min_health = target_of_potion.get_hp()
+
+        if min_health < 60 and self.potions > 0:
+            print("Исцеляю", target_of_potion.name)
+            self.give_a_potion(target_of_potion)
+        else:
+            if not enemies:
+                return
+            print("Атакую ближнего -", enemies[0].name)
+            self.attack(enemies[0])
+        print('\n')
+
+#########################################################################
+#25.PK 5
+class Stack:
+    """
+    Класс Стэк.
+
+    Attributes:
+
+        __new_roster (List) - Список
+    """
+
+    def __init__(self):
+        self.__new_roster = []
+
+    def __str__(self):
+        return '; '.join(self.__new_roster)
+
+    """
+        Метод __str__ возвращает (принтует в консоль) задачи через "точку с запятой" 
+    """
+
+    def push(self, elem):
+        self.__new_roster.append(elem)
+
+    """
+        Метод Пуш добавляет в список new_roster входящие задачи
+
+        Arg:
+         elem (str) - передается номер и задача
+    """
+
+    def pop(self):
+        if len(self.__new_roster) == 0:
+            return None
+        return self.__new_roster.pop()
+
+    """
+        Метод Pop удаляет последний элемент из списка, но если список пуст, возвращает None
+    """
+
+
+class TaskManager:
+    """
+    Класс Менеджер Задач.
+
+    Attributes:
+        roster (dict) - Словарь
+    """
+
+    def __init__(self):
+        self.roster = dict()
+
+    def __str__(self):
+        display = []
+        if self.roster:
+            for i_number in sorted(self.roster.keys()):
+                display.append(f'{str(i_number)} {self.roster[i_number]}\n')
+            return ''.join(display)
+        """
+            Метод __str__ возвращает и принтует новый список
+        """
+
+    def new_task(self, task: str, number_task: int):
+        if number_task not in self.roster:
+            self.roster[number_task] = Stack()
+        self.roster[number_task].push(task)
+        """
+            Метод new_task проверяет есть ли такой номер в реестре,
+            если нет, то вызывает Класс Стэк,
+            иначе добавляет через метод Пуш новую задачу
+
+            arg:
+                task (str) - передается задача
+                number_task (int) - передается номер задачи(приоритет)
+        """
+
+
+manager = TaskManager()
+manager.new_task("сделать уборку", 4)
+manager.new_task("помыть посуду", 4)
+manager.new_task("отдохнуть", 1)
+manager.new_task("поесть", 2)
+manager.new_task("сдать ДЗ", 2)
+print(manager)
+#########################################################################
+#26.PK 1
+
+f = [1, 2, 3] # - создаем итрерируемый объект
+e = f.__iter__() # или e = iter(f) - создаем итератор
+print(e.__next__()) # Выдает 1
+print(e.__next__()) # Выдает 2
+print(next(e)) # или так и последовательно Выдает 3
+# Если попытаемся вывести следующий то будет ошибка-итератор одноразовый
+
+
+roster = [1, 2, 3, 4, 5]
+iter_roster = iter(roster)
+while iter_roster:
+    try:
+        print(next(iter_roster))
+    except StopIteration:
+        print('Конец!')
+        break
+
+
+class CountIterator:
+    count = 0
+    def __iter__(self):
+        return self
+    def __next__(self):
+        CountIterator.count += 1
+        return CountIterator.count
+
+my_iter = CountIterator()
+for i_elem in my_iter:
+    print(i_elem)
+
+#########################################################################
+#26.PK 2 #13.4.2
+import random
+
+
+class CountIterator:
+    count = 0
+
+    def __init__(self, count_number):
+        self.count_number = count_number
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.count_number > 0:
+            CountIterator.count += random.uniform(0.0, 1.0)
+            self.count_number -= 1
+            return round(CountIterator.count, 2)
+        raise StopIteration
+
+
+limit = int(input('Кол-во элементов: '))
+my_iter = CountIterator(limit)
+print('Элементы итератора:')
+for i_elem in my_iter:
+    print(i_elem)
+
+#########################################################################
+#14.2.1
+from typing import Callable
+
+def func_2(my_func: Callable, *args, **kwargs) -> int:
+    return my_func(*args, **kwargs) * my_func(*args, **kwargs)
+
+def func_1(x: int) -> int:
+    return x + 10
+
+print(func_2(func_1, 9))
+#########################################################################
+#14.2.2
+from typing import Callable, Any
+import time
+
+
+def timer(my_func: Callable, *args, **kwargs) -> Any:
+    """Функция - таймер. Выводит время работы функции и возвращает её результат"""
+    started_at = time.time()
+    result = my_func(*args, **kwargs)
+    end_at = time.time()
+    answer_at = round(end_at - started_at, 4)
+    print(f'Функция работала: {answer_at} секунд(ы)')
+
+    return result
+
+
+def squares_sum() -> int:
+    number = 100
+    result = 0
+    for _ in range(number + 1):
+        result += sum([i_num**2 for i_num in range(10000)])
+
+    return result
+
+
+def cube_sum(number: int) -> int:
+    result = 0
+    for _ in range(number + 1):
+        result += sum([i_num**3 for i_num in range(10000)])
+
+    return result
+
+
+my_result = timer(squares_sum)
+print(my_result)
+my_result_cube = timer(cube_sum, 200)
+print(my_result_cube)
+#########################################################################
+#14.3.1
+from typing import Callable, Any
+
+
+def do_twice(func: Callable) -> Callable:
+    """
+    Декоратор do_twice,
+    который дважды вызывает декорируемую функцию.
+    """
+
+    def wrapped_greeting(*args, **kwargs) -> Any:
+        func(*args, **kwargs)
+        return func(*args, **kwargs)
+    return wrapped_greeting
+
+
+@do_twice
+def greeting(name: str) -> Any:
+    print('Привет, {name}!'.format(name=name))
+
+
+greeting('Tom')
+#########################################################################
+#14.3.2
+import time
+from typing import Callable, Any
+
+
+def timer(my_func: Callable) -> Any:
+    """
+    Декоратор, выводящий время, которое заняло
+    выполнение декорируемой функции.
+    """
+    def wrapped_func(*args, **kwargs):
+        started_at = time.time()
+        result = my_func(*args, **kwargs)
+        end_at = time.time()
+        answer_at = round(end_at - started_at, 4)
+        print(f'Функция работала: {answer_at} секунд(ы)')
+        return result
+    return wrapped_func
+
+
+@timer
+def squares_sum() -> int:
+    number = 100
+    result = 0
+    for _ in range(number + 1):
+        result += sum([i_num**2 for i_num in range(10000)])
+    return result
+
+
+@timer
+def cube_sum(number: int) -> int:
+    result = 0
+    for _ in range(number + 1):
+        result += sum([i_num**3 for i_num in range(10000)])
+    return result
+
+
+a = cube_sum(200)
+print(a)
+b = squares_sum()
+print(b)
+#########################################################################
+# 14.4
+from typing import Callable, Any
+
+
+def bread(func: Callable) -> Callable:
+    """
+    Декоратор bread, который складывает сэндвича
+    """
+
+    def wrapped_bread(*args, **kwargs) -> Any:
+        print('</ ----------\>')
+        func(*args, **kwargs)
+        print('<\______/>')
+
+    return wrapped_bread
+
+
+def ingredients(func: Callable) -> Callable:
+    """
+    Декоратор indigrients, которые входят в состав сэндвича
+    """
+
+    def wrapped_bread(name, name_2, name_3) -> Any:
+        print('#{name}#\n--{name_2}--\n~{name_3}~'.format(name=name, name_2=name_2, name_3=name_3))
+        return func(name, name_2, name_3)
+
+    return wrapped_bread
+
+
+@bread
+@ingredients
+def sandwich(name: str, name_2: str, name_3: str) -> Any:
+    return sandwich
+
+
+sandwich('помидоры', 'ветчина', 'салат')
+
+#########################################################################
+# 14.4.2
+from typing import Callable
+
+plugins = dict()
+
+
+def decorator(func: Callable) -> Callable:
+    plugins[func.__name__] = func
+    return func
+
+
+@decorator
+def say():    print('hi!')
+
+
+print(plugins)
+#########################################################################
+#PK 14.1
+
+from typing import Callable
+import functools
+
+def how_are_you(func: Callable) -> Callable:
+    """
+    Декоратор how_are_you. Спрашивает "как дела?" и отвечает.
+    """
+    @functools.wraps(func)
+    def wrapped_question() -> Any:
+        _ = input('Как дела? ')
+        print('А у меня не очень! Ладно, держи свою функцию.')
+        return func()
+    return wrapped_question
+
+
+@how_are_you
+def test():
+    print('<Тут что-то происходит...>')
+
+
+test()
+print(how_are_you.__doc__)
+#########################################################################
+#PK 14.2
+from typing import Callable, Any
+import functools
+import threading
+
+
+def timer(my_func: Callable) -> Any:
+    """
+   Декоратор timer, выводит функцию header, каждые 5 секунд.
+    """
+    @functools.wraps(my_func)
+    def wrapped_func(*args, **kwargs):
+        threading.Timer(5.0, header).start()
+        my_func(*args, **kwargs)
+        return my_func
+    return wrapped_func
+
+
+@timer
+def header() -> Any:
+    print('Title, html')
+
+
+print(timer.__doc__)
+header()
+#########################################################################
+#PK 14.3
+from typing import Callable, Any
+import functools
+import datetime
+
+
+def logging(func: Callable) -> Any:
+    """
+    Декоратор logging, отвечает за логирование функций.
+    """
+    print(func.__doc__)
+
+    @functools.wraps(func)
+    def wrapped_func(*args, **kwargs):
+        file = open('function_errors.log', 'a', encoding='utf-8')
+        temp = func(*args, **kwargs)
+        datetime_now = datetime.datetime.now()
+        file.write('\nФункция - {func}, Ошибка! - {temp}, Время: {datetime_now}\n'.format(func=func.__name__,
+                                                                                          temp=str(temp),
+                                                                                          datetime_now=datetime_now))
+        file.close()
+        return temp
+    return wrapped_func
+
+
+@logging
+def division() -> Any:
+    """
+    Функция division, Делит 2 числа
+    """
+    try:
+        answer = 8 / 0
+    except BaseException as answer:
+        return answer
+
+
+@logging
+def folding() -> Any:
+    """
+    Функция folding, складывает 2 числа
+    """
+    try:
+        answer = 5 + '4'
+    except BaseException as answer:
+        return answer
+
+
+division()
+folding()
+
+#########################################################################
+#PK 14.4
+from typing import Callable, Any
+import functools
+
+
+def counter(func: Callable) -> Any:
+    """
+    Декоратор counter, cчитает кол-во вызовов обертки декоратора.
+   """
+
+    @functools.wraps(func)
+    def wrapped_func(*args, **kwargs):
+        counter.count += 1
+        temp = func(*args, **kwargs)
+        print(f'Функция {func.__name__} вызвана: {counter.count} раз')
+        return temp
+    counter.count = 0
+    return wrapped_func
+
+@counter
+def test() -> Any:
+    print('test')
+
+test()
+test()
+#########################################################################
+#15
+from abc import ABC, abstractmethod
+
+
+class Figure(ABC):
+    """
+    Абстрактный класс Фигура
+    """
+
+    def __init__(self, pos_x: int, pos_y: int, length: int, width: int) -> None:
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.length = length
+        self.width = width
+
+    @abstractmethod
+    def move(self, pos_x: int, pos_y: int) -> None:
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+
+class ResizableMixin:
+    def resize(self, length: int, width: int) -> None:
+        self.length = length
+        self.width = width
+
+
+class Rectangle(Figure, ResizableMixin):
+    """
+    Прямоугольник
+    """
+
+    def move(self, pos_x: int, pos_y: int) -> None:
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+
+class Square(Figure, ResizableMixin):
+    """ Квадрат """
+
+    def __init__(self, pos_x: int, pos_y: int, size: int) -> None:
+        super().__init__(pos_x, pos_y, size, size)
+
+    def move(self, pos_x: int, pos_y: int) -> None:
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+
+
+
+rect_1 = Rectangle(pos_x=10, pos_y=20, length=5, width=6)
+rect_2 = Rectangle(pos_x=30, pos_y=40, length=10, width=11)
+square_1 = Square(pos_x=50, pos_y=70, size=7)
+
+
+for figure in [rect_1, rect_2, square_1]:
+    new_size_x = figure.length * 2
+    new_size_y = figure.width * 2
+    figure.resize(new_size_x, new_size_y)
+
+
+test = Square(1, 2, 34)
+print(Square.__name__)
+
+#############################################################
+from abc import ABC, abstractmethod
+
+
+class MusicMixin:
+
+    def music(self):
+        print('Я свободен! Словно птица в небесах')
+
+
+class Transport(ABC):
+
+    @abstractmethod
+    def ride_earth(self):
+        pass
+
+    @abstractmethod
+    def ride_water(self):
+        pass
+
+
+class Auto(Transport):
+
+    def ride_earth(self):
+        print('Я еду по земле')
+
+
+class Boat(Transport):
+
+    def ride_water(self):
+        print('Я еду по воде')
+
+
+class Amphibians(Auto, Boat, MusicMixin):
+    pass
+
+
+a = Amphibians()
+a.music()
+a.ride_earth()
+a.ride_water()
+
+#############################################################
+#Контекст менеджер
+
+class File:
+    def __init__(self, filename, mode) -> None:
+        print('Открывание файла')
+        self.filename = filename
+        self.mode = mode
+        self.start = None
+
+    def __enter__(self) -> 'File':
+        self.start = open(self.filename, self.mode, encoding='utf-8')
+        return self.start
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.start.close()
+        return True
+
+
+with File('example.txt', 'w') as file:
+    file.write('Всем привет!')
+
+#############################################################
+class Example:
+    def __init__(self) -> None:
+        print('Вызов __init__')
+
+    def __enter__(self) -> 'Example':
+        self.a = 'Вызов __enter__'
+        print(self.a)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('Вызов __exit__')
+        if exc_type is Exception:
+            return True
+
+
+my_obj = Example()
+
+with my_obj as obj:
+    print('Код внутри первого вызова контекст менеджера')
+
+    with my_obj as obj2:
+        raise Exception('Выброс исключения во вложенном (втором) вызове контекст менеджере')
+
+    print('Я обязательно выведусь...')
+#############################################################
+from abc import ABC, abstractmethod
+
+
+class MusicMixin:
+
+    def music(self):
+        print('Я свободен! Словно птица в небесах')
+
+
+class Transport(ABC):
+    def __init__(self, color: str, speed: int) -> None:
+        self._color = color
+        self._speed = speed
+
+    def __str__(self):
+        return f'Транспорт {self.color} цвета едет со скоростью {self.speed}'
+
+    @abstractmethod
+    def ride_earth(self):
+        pass
+
+    def ride_water(self):
+        pass
+
+    @property
+    def color(self) -> str: # get
+        return self._color
+
+    @color.setter
+    def color(self, new_color: str):
+        self._color = new_color
+
+    @property
+    def speed(self) -> int: # get
+        return self._speed
+
+    @speed.setter
+    def speed(self, new_speed: int):
+        self._speed = new_speed
+
+
+class Auto(Transport):
+
+    def ride_earth(self):
+        print('Я еду по земле')
+
+
+class Boat(Transport):
+
+    def ride_water(self):
+        print('Я еду по воде')
+
+
+class Amphibians(Auto, Boat, MusicMixin):
+    pass
+
+
+a = Amphibians(color='Red', speed=55)
+a.music()
+a.ride_earth()
+a.ride_water()
+print(a)
+b = Auto(color='Blue', speed=105)
+b.color = 'Yellow'
+b.speed = 200
+print(b.color)
+print(b)
+#############################################################
+#PK 15.1
+
+class File:
+    """
+    Класс "Контекст менеджер" File - Открывает файл и проверяет на наличие уже существующего.
+        Attributes:
+        filename - Наименование файла
+        mode - Режим чтения/записи (r/w)
+    """
+    def __init__(self, filename: str, mode: str) -> None:
+        print('Открывание файла')
+        self.filename = filename
+        self.mode = mode
+
+    def __enter__(self) -> 'File':
+        """
+        Метод Enter - открывая в обработке файл с заданными атрибутами, если файл уже существует,
+         то откроет в режим записи.
+        :return: возвращает в глобальную переменную.
+        """
+        try:
+            self.file = open(self.filename, self.mode, encoding='utf-8')
+        except FileNotFoundError:
+            self.file = open(self.filename, 'w', encoding='utf-8')
+        return self.file
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """
+        Метод Exit - закрывает в завершение файл.
+        :return: Возвращая True, подтверждая успешное завершение.
+        """
+        self.file.close()
+        return True
+
+
+with File('example.txt', 'r') as file:
+    file.write('Всем привет!')
+#############################################################
+#PK 15.2
+class MyMath:
+    """
+    Класс MyMath с различными математическими вычислениями.
+    __pi: число пи
+    """
+    __pi = 3.1415926535
+
+    @classmethod
+    def circle_len(cls, radius: int) -> float:
+        """
+        Метод вычисления длины окружности (answer=2πR)
+        :param radius: (int) радиус
+        :return: (float) ответ
+        """
+        answer = 2 * cls.__pi * radius
+        return answer
+
+    @classmethod
+    def area_circle(cls, radius: int) -> float:
+        """
+        Метод вычисления площади окружности (answer=πR²).
+        :param radius: (int) радиус
+        :return: (float) ответ
+        """
+        answer = cls.__pi * (radius ** 2)
+        return answer
+
+    @classmethod
+    def cube_volume(cls, edge: int) -> int:
+        """
+        Метод вычисления объёма куба (answer=a³).
+        :param edge: (int) радиус
+        :return: (int) ответ
+        """
+        answer = edge ** 3
+        return answer
+
+    @classmethod
+    def surface_area_sphere(cls, radius: int) -> float:
+        """
+        Метод площадь поверхности сферы (answer= 4πR²).
+        :param radius: (int) радиус
+        :return: (float) ответ
+        """
+        answer = (4 * cls.__pi) * (radius ** 2)
+        return answer
+
+
+res_1 = MyMath.circle_len(radius=5)
+res_2 = MyMath.area_circle(radius=6)
+res_3 = MyMath.cube_volume(edge=3)
+res_4 = MyMath.surface_area_sphere(radius=9)
+print(res_1)
+print(res_2)
+print(res_3)
+print(res_4)
+############################################################
+#PK 15.3
+from typing import Any
+
+
+class Date:
+    """
+    Класс Date, проверяет числа даты на корректность.
+    Attributes:
+        day(int) - день
+        month(int) - месяц
+        year(int) - год
+    """
+    day = 0
+    month = 0
+    year = 0
+
+    @classmethod
+    def from_string(cls, new_date: str) -> Any:
+        """
+        Метод преобразует из str в int присваивая атрибутам значения.
+        :param new_date: входящая строка типового значения "14-08-2022" через дефис
+        :return: полную информацию о дате.
+        """
+        cls.day = int(new_date[:2])
+        cls.month = int(new_date[3:5])
+        cls.year = int(new_date[6:])
+        return f'День: {cls.day}    Месяц: {cls.month}    Год: {cls.year}'
+
+    @classmethod
+    def is_date_valid(cls, new_date: str) -> bool:
+        """
+        Метод проверяет на логические ошибки в дате.
+        :param new_date: входящая строка типового значения "14-08-2022" через дефис
+        :return: True или False.
+        """
+        flag = True
+        Date.from_string(new_date)
+        if cls.day > 31 or cls.month > 12:
+            flag = False
+        return flag
+
+
+date = Date.from_string('10-12-2077')
+print(date)
+print(Date.is_date_valid('10-12-2077'))
+print(Date.is_date_valid('40-12-2077'))
+############################################################
+#16.1
+from collections.abc import Iterator
+from contextlib import contextmanager
+import time
+
+
+@contextmanager
+def timer() -> Iterator:
+    start = time.time()
+    try:
+        yield
+    except Exception as er:
+        print(f'Ошибка: {er}')
+    finally:
+        print(f'Прошло времени: {time.time() - start}')
+
+
+with timer() as answer:
+    print('Первая часть')
+    result = 100 * 100 ** 1000000
+    result += "f"
+
+
+with timer() as answer_2:
+    print('Вторая часть')
+    result_2 = 200 * 200 ** 1000000
+############################################################
+#16.2
+from collections.abc import Iterator
+from contextlib import contextmanager
+import os
+
+
+@contextmanager
+def in_dir(address) -> Iterator:
+    cur_path = os.getcwd()
+    os.chdir(address)
+    try:
+        yield
+    finally:
+        os.chdir(cur_path)
+# принимает в качестве аргумента путь и временно меняет текущую рабочую директорию на новую.
+
+with in_dir('C:\Skillbox\Basic'):
+    print(os.listdir())
+############################################################
+#16.2.1
+from typing import Callable, Any
+
+
+def repeat(number: int = 2) -> Callable:
+    def do_twice(func: Callable) -> Callable:
+        def wrapped_greeting(*args, **kwargs) -> Any:
+            [func(*args, **kwargs) for _ in range(number)]
+        return wrapped_greeting
+    return do_twice
+
+
+@repeat(number=6)
+def greeting(name: str) -> Any:
+    print('Привет, {name}!'.format(name=name))
+
+
+greeting('Tom')
+############################################################
+#16.2.2
+from typing import Callable, Any
+import threading
+
+
+def do_timer(_func=None, *, time_sec: int = 1) -> Callable:
+    def timer(my_func: Callable) -> Any:
+        def wrapped_func(*args, **kwargs):
+            threading.Timer(time_sec, header).start()
+            my_func(*args, **kwargs)
+            return my_func
+        return wrapped_func
+    if _func is None:
+        return timer
+    return timer(_func)
+# декоратор можно использовать как с аргументами, так и без них.
+
+
+@do_timer(time_sec=5) # вот здесь можно писать и без аргументов
+def header() -> Any:
+    print('Title, html')
+
+
+header()
+
+############################################################
+#29.1
+import functools
+from typing import Callable, Any
+
+
+def check_permission(person: str) -> Any:
+    """Декоратор для проверки прав пользователя.
+    Возвращает ошибку или право доступа к функции"""
+    def decorator(func: Callable) -> Callable:
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                if person == ''.join(user_permissions):
+                    return func(*args, **kwargs)
+                raise PermissionError
+            except PermissionError:
+                print('У пользователя недостаточно прав, чтобы выполнить функцию add_comment')
+        return wrapper
+    return decorator
+
+
+user_permissions = ['admin']
+
+
+@check_permission('admin')
+def delete_site():
+    print('Удаляем сайт')
+
+
+@check_permission('user_1')
+def add_comment():
+    print('Добавляем комментарий')
+
+
+delete_site()
+add_comment()
+############################################################
+#29.2
+import functools
+from typing import Callable, Any
+
+
+def callback(url: str) -> Any:
+    """
+    Функция, которая вызывается при срабатывании определённого события:
+    переходе на страницу, получении сообщения или окончании обработки процессором.
+    """
+    def decorator(func: Callable) -> Callable:
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            print(f'Вызвана функция {func.__name__} по url-адресу {url}')
+            result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+
+
+@callback('//')
+def example():
+    print('Пример функции, которая возвращает ответ сервера')
+    return 'OK'
+
+
+app = {'//': example}
+route = app.get('//')
+if route:
+    response = route()
+    print('Ответ:', response)
+else:
+    print('Такого пути нет')
+############################################################
+#29.3
+import time
+from datetime import datetime
+import functools
+
+
+def timer(func, cls, date_time):
+    """
+    Функция timer обёртка от log_methods,
+    которая преобразует дату и фиксирует затраченное время на выполнение методов класса.
+    """
+    @functools.wraps(cls)
+    def wrapper(*args, **kwargs):
+        new_date = ['%' + letter if letter.isalpha() else letter for letter in date_time]
+        new_date_symbol = ''.join(new_date)
+        now = datetime.now()
+        print(f'Запускается {cls.__name__}.{func.__name__}. Дата и время запуска: {now.strftime(new_date_symbol)}.')
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f'Завершение {cls.__name__}.{func.__name__}, время работы = {round(end - start, 3)} s. ')
+        return result
+    return wrapper
+
+
+def log_methods(date_time: str):
+    """
+    Декоратор класса.
+    Получает параметры даты и фиксирует время с помощью функции timer применяет его ко всем методам класса.
+    """
+    def decorate(cls):
+        for i_method_name in dir(cls):
+            if i_method_name.startswith('__') is False:
+                cur_method = getattr(cls, i_method_name)
+                decorated_method = timer(cur_method, cls, date_time)
+                setattr(cls, i_method_name, decorated_method)
+        return cls
+    return decorate
+
+
+@log_methods('b d Y - H:M:S')
+class A:
+    def test_sum_1(self) -> int:
+        print('Тут метод test sum 1')
+        number = 100
+        result = 0
+        for _ in range(number + 1):
+            result += sum([i_num ** 2 for i_num in range(10000)])
+
+        return result
+
+
+@log_methods('b d Y - H:M:S')
+class B(A):
+    def test_sum_1(self):
+        super().test_sum_1()
+        print("Наследник test sum 1")
+
+    def test_sum_2(self):
+        print("Наследник test sum 2")
+        number = 200
+        result = 0
+        for _ in range(number + 1):
+            result += sum([i_num ** 2 for i_num in range(10000)])
+
+        return result
+
+
+my_obj = B()
+my_obj.test_sum_1()
+my_obj.test_sum_2()
+############################################################
+#29.4
+from typing import Callable, Any
+import functools
+
+
+def decorator_with_args_for_any_decorator(decorated_decorator: Callable) -> Callable: # оболочка Декоратора
+    """
+    Декорирует декоратор. Даёт возможность любому декоратору принимать произвольные аргументы.
+    """
+    @functools.wraps(decorated_decorator)  # Декорируемый декоратор
+    def wrapped(*args, **kwargs): # Аргументы от @decorated_decorator(..,аргументы,..)
+        def decorated_decorator(func): # Открывает функцию
+            def wrapper(*decorated_decorator_args, **decorated_decorator_kwargs): # Cодержимое функции
+                print(f'Переданные арги и кварги в декоратор: {args, kwargs}')
+                result = func(*decorated_decorator_args, **decorated_decorator_kwargs) # запускает содержимое функции
+                return result
+            return wrapper
+        return decorated_decorator
+    return wrapped
+
+
+@decorator_with_args_for_any_decorator
+def decorated_decorator(func: Callable) -> Any:
+    """
+    Декоратор функции. Вызывает(декорирует) содержимое функции
+    """
+    @functools.wraps(func)
+    def wrapper(*func_args, **func_kwargs):
+        result = func(*func_args, **func_kwargs)
+        return result
+    return wrapper
+
+
+@decorated_decorator(100, 'рублей', 200, 'друзей')
+def decorated_function(text: str, num: int) -> None:
+    print("Привет", text, num)
+
+
+decorated_function("Юзер", 101)
+############################################################
+#29.4
+import functools
+
+
+def singleton(cls):
+    """ Декоратор класса. Который превращает класс в одноэлементный"""
+    @functools.wraps(cls)
+    def wrapper_singleton(*args, **kwargs):
+        if not wrapper_singleton.instance:
+            wrapper_singleton.instance = cls(*args, **kwargs)
+        return wrapper_singleton.instance
+    wrapper_singleton.instance = None
+    return wrapper_singleton
+
+
+@singleton
+class Example:
+    pass
+
+
+my_obj = Example()
+my_another_obj = Example()
+
+print(id(my_obj))
+print(id(my_another_obj))
+############################################################
+#30.2 (ч. 1)
+from typing import Callable, Any
+import functools
+
+
+def counter_2(func: Callable) -> Any:
+    """
+    Декоратор counter_2. Считает кол-во вызовов обёртки декоратора.
+    Здесь применяем global
+   """
+    @functools.wraps(func)
+    def wrapped_func(*args, **kwargs):
+        global count
+        count += 1
+        temp = func(*args, **kwargs)
+        print(f'Функция {func.__name__} вызвана: {count} раз')
+        return temp
+    return wrapped_func
+
+
+@counter_2
+def test() -> Any:
+    print('test')
+
+
+count = 0
+test()
+test()
+############################################################
+#30.2 (ч. 2)
+from typing import Callable, Any
+import functools
+from collections.abc import Callable
+
+
+def counter_2(func: Callable) -> Any:
+    """
+    Декоратор counter_2. Считает кол-во вызовов обёртки декоратора.
+    Здесь применяем nonlocal
+   """
+    @functools.wraps(func)
+    def wrapped_func(*args, **kwargs):
+        nonlocal count
+        count += 1
+        temp = func(*args, **kwargs)
+        print(f'Функция {func.__name__} вызвана: {count} раз')
+        return temp
+    count = 0
+    return wrapped_func
+
+
+@counter_2
+def test() -> Any:
+    print('test')
+
+
+test()
+test()
+print(dir(__builtins__)) # Команда которая перечисляет все функции и методы,
+# находящиеся во встроенном пространстве имён в Python
+print(dir('.')) #Или это. Но они разные
+############################################################
+#30.2 (test)
+def test():
+    b = 5
+
+    def test_2():
+        a = 8
+        if 'a' in globals():
+            raise Exception
+        if 'c' in locals():
+            raise Exception
+        print('b' in locals())
+        print('b' in globals())
+    test_2()
+
+c = 4
+test()
+# b - in nonlocal
+# c - in globals
+# a - in locals
+############################################################
+#pk 30(1)
+from typing import List
+from functools import reduce
+
+
+floats: List[float] = [12.3554, 4.02, 5.777, 2.12, 3.13, 4.44, 11.0001]
+names: List[str] = ["Vanes", "Alen", "Jana", "William", "Richards", "Joy"]
+numbers: List[int] = [22, 33, 10, 6894, 11, 2, 1]
+
+if name == "__main__":
+    result_float = list(map(lambda x: round(x**3, 3), floats))
+    print(result_float)
+    result_names = list(filter(lambda x: len(x) > 4, names))
+    print(result_names)
+    result_numbers = reduce(lambda x, y: x * y, numbers)
+    print(result_numbers)
+############################################################
+#pk 30(2)
+from typing import List
+
+if name == "__main__":
+    letters: List[str] = ['a', 'b', 'c', 'd', 'e']
+    numbers: List[int] = [1, 2, 3, 4, 5, 6, 7, 8]
+    result = list(map(lambda x, y: tuple(x + str(y)), letters, numbers))
+    print(result)
+############################################################
+#pk 30(3)
+from collections import deque
+
+if __name__ == '__main__':
+    def can_be_poly(word: str) -> bool:
+        new_word = deque(word)
+        new_word.reverse()
+        if ''.join(new_word) == word:
+            return True
+        return False
+
+
+    print(can_be_poly('abcba'))
+    print(can_be_poly('abbbc'))
+
+from abc import ABC, abstractmethod
+
+
+class Figure(ABC):
+    """
+    Абстрактный класс Фигура
+    """
+
+    def __init__(self, pos_x: int, pos_y: int, length: int, width: int) -> None:
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.length = length
+        self.width = width
+
+    @abstractmethod
+    def move(self, pos_x: int, pos_y: int) -> None:
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+
+class ResizableMixin:
+    def resize(self, length: int, width: int) -> None:
+        self.length = length
+        self.width = width
+
+
+class Rectangle(Figure, ResizableMixin):
+    """
+    Прямоугольник
+    """
+
+    def move(self, pos_x: int, pos_y: int) -> None:
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+
+class Square(Figure, ResizableMixin):
+    """ Квадрат """
+
+    def __init__(self, pos_x: int, pos_y: int, size: int) -> None:
+        super().__init__(pos_x, pos_y, size, size)
+
+    def move(self, pos_x: int, pos_y: int) -> None:
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+
+
+
+rect_1 = Rectangle(pos_x=10, pos_y=20, length=5, width=6)
+rect_2 = Rectangle(pos_x=30, pos_y=40, length=10, width=11)
+square_1 = Square(pos_x=50, pos_y=70, size=7)
+
+
+for figure in [rect_1, rect_2, square_1]:
+    new_size_x = figure.length * 2
+    new_size_y = figure.width * 2
+    figure.resize(new_size_x, new_size_y)
+
+
+test = Square(1, 2, 34)
+print(Square.__name__)
+
+#############################################################
+from abc import ABC, abstractmethod
+
+
+class MusicMixin:
+
+    def music(self):
+        print('Я свободен! Словно птица в небесах')
+
+
+class Transport(ABC):
+
+    @abstractmethod
+    def ride_earth(self):
+        pass
+
+    @abstractmethod
+    def ride_water(self):
+        pass
+
+
+class Auto(Transport):
+
+    def ride_earth(self):
+        print('Я еду по земле')
+
+
+class Boat(Transport):
+
+    def ride_water(self):
+        print('Я еду по воде')
+
+
+class Amphibians(Auto, Boat, MusicMixin):
+    pass
+
+
+a = Amphibians()
+a.music()
+a.ride_earth()
+a.ride_water()
+
+#############################################################
+#Контекст менеджер
+
+class File:
+    def __init__(self, filename, mode) -> None:
+        print('Открывание файла')
+        self.filename = filename
+        self.mode = mode
+        self.start = None
+
+    def __enter__(self) -> 'File':
+        self.start = open(self.filename, self.mode, encoding='utf-8')
+        return self.start
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.start.close()
+        return True
+
+
+with File('example.txt', 'w') as file:
+    file.write('Всем привет!')
+
+#############################################################
+class Example:
+    def __init__(self) -> None:
+        print('Вызов __init__')
+
+    def __enter__(self) -> 'Example':
+        self.a = 'Вызов __enter__'
+        print(self.a)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('Вызов __exit__')
+        if exc_type is Exception:
+            return True
+
+
+my_obj = Example()
+
+with my_obj as obj:
+    print('Код внутри первого вызова контекст менеджера')
+
+    with my_obj as obj2:
+        raise Exception('Выброс исключения во вложенном (втором) вызове контекст менеджере')
+
+    print('Я обязательно выведусь...')
+#############################################################
+from abc import ABC, abstractmethod
+
+
+class MusicMixin:
+
+    def music(self):
+        print('Я свободен! Словно птица в небесах')
+
+
+class Transport(ABC):
+    def __init__(self, color: str, speed: int) -> None:
+        self._color = color
+        self._speed = speed
+
+    def __str__(self):
+        return f'Транспорт {self.color} цвета едет со скоростью {self.speed}'
+
+    @abstractmethod
+    def ride_earth(self):
+        pass
+
+    def ride_water(self):
+        pass
+
+    @property
+    def color(self) -> str: # get
+        return self._color
+
+    @color.setter
+    def color(self, new_color: str):
+        self._color = new_color
+
+    @property
+    def speed(self) -> int: # get
+        return self._speed
+
+    @speed.setter
+    def speed(self, new_speed: int):
+        self._speed = new_speed
+
+
+class Auto(Transport):
+
+    def ride_earth(self):
+        print('Я еду по земле')
+
+
+class Boat(Transport):
+
+    def ride_water(self):
+        print('Я еду по воде')
+
+
+class Amphibians(Auto, Boat, MusicMixin):
+    pass
+
+
+a = Amphibians(color='Red', speed=55)
+a.music()
+a.ride_earth()
+a.ride_water()
+print(a)
+b = Auto(color='Blue', speed=105)
+b.color = 'Yellow'
+b.speed = 200
+print(b.color)
+print(b)
+#############################################################
+#PK 15.1
+
+class File:
+    def __init__(self, filename: str, mode: str) -> None:
+        print('Открывание файла')
+        self.filename = filename
+        self.mode = mode
+        self.start = None
+
+    def __enter__(self) -> 'File':
+        try:
+            self.file = open(self.filename, self.mode, encoding='utf-8')
+        except FileNotFoundError:
+            self.file = open(self.filename, 'w', encoding='utf-8')
+        return self.file
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.file.close()
+        return True
+
+
+with File('example.txt', 'r') as file:
+    file.write('Всем привет!')
+#############################################################
+#PK 15.2
+import math
+
+
+class MyMath:
+    __pi = math.pi
+    """
+    Класс MyMath
+    """
+
+    @classmethod
+    def circle_len(cls, radius: int) -> float:
+        answer = 2 * cls.__pi * radius
+        return answer
+
+    @classmethod
+    def area_circle(cls, radius: int) -> float: #площадь окружности S=πR²
+        answer = cls.__pi * (radius ** 2)
+        return answer
+
+    @classmethod
+    def cube_volume(cls, edge: int) -> int: #объём куба V=a³
+        answer = edge ** 3
+        return answer
+
+    @classmethod
+    def surface_area_sphere(cls, radius: int) -> float: #площадь поверхности сферы  S = 4πR²
+        answer = (4 * cls.__pi) * (radius ** 2)
+        return answer
+
+
+res_1 = MyMath.circle_len(radius=5)
+res_2 = MyMath.area_circle(radius=6)
+res_3 = MyMath.cube_volume(edge=3)
+res_4 = MyMath.surface_area_sphere(radius=9)
+print(res_1)
+print(res_2)
+print(res_3)
+print(res_4)
+############################################################
+
+class Date:
+    day = 0
+    month = 0
+    year = 0
+
+    @classmethod
+    def from_string(cls, new_date: str):
+        cls.day = int(new_date[:2])
+        cls.month = int(new_date[3:5])
+        cls.year = int(new_date[6:])
+        return f'День: {cls.day}    Месяц: {cls.month}    Год: {cls.year}'
+
+    @classmethod
+    def is_date_valid(cls, new_date: str):
+        flag = True
+        Date.from_string(new_date)
+        if cls.day > 31 or cls.month > 12:
+            flag = False
+        return flag
+
+
+date = Date.from_string('10-12-2077')
+print(date)
+print(Date.is_date_valid('10-12-2077'))
+print(Date.is_date_valid('40-12-2077'))
+############################################################
+import functools
+from datetime import datetime
+import time
+from typing import Callable
+
+
+def createtime(cls):
+    """
+    Декоратор класса. Выводит время создания  инстанса класса
+    """
+    @functools.wraps(cls)
+    def wrapper(*args, **kwargs):
+        print('Время создания инстанса класса:', datetime.utcnow())
+        instance = cls(*args, **kwargs)
+        return instance
+    return wrapper
+
+
+def timer(func: Callable) -> Callable:
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print('Время работы функции: ', end - start)
+        return result
+    return wrapper
+
+
+def for_all_decorated(decorator: Callable) -> Callable:
+    """
+    Декоратор класса.
+    Получает другой декоратор и применяет  его ко всем методам класса.
+    """
+    @functools.wraps(decorator)
+    def decorate(cls):
+        for i_method_name in dir(cls):
+            if i_method_name.startswith('__') is False:
+                cur_method = getattr(cls, i_method_name)
+                decorated_method = decorator(cur_method)
+                setattr(cls, i_method_name, decorated_method)
+        return cls
+    return decorate
+
+
+@createtime
+@for_all_decorated(timer)
+class MyMath:
+    def __init__(self, max_number: int) -> None:
+        self.max_number = max_number
+
+    def square(self) -> int:
+        number = 100
+        result = 0
+        for _ in range(number + 1):
+            result += sum([i_num ** 2 for i_num in range(self.max_number)])
+
+        return result
+
+    def cube(self, number: int) -> int:
+        result = 0
+        for _ in range(number + 1):
+            result += sum([i_num ** 3 for i_num in range(self.max_number)])
+
+        return result
+
+
+my_func_1 = MyMath(max_number=1000)
+my_func_1.square()
+my_func_1.cube(number=300)
+############################################################
+#Домашка
+import functools
+import time
+from datetime import datetime
+
+
+def create_time(cls):
+    @functools.wraps(cls)
+    def wrapper(*args, **kwargs):
+        print('Время создания: ', datetime.now())
+        instance = cls(*args, **kwargs)
+        new_roster_method = [method for method in dir(cls) if method.startswith('__') is False]
+        print('Методы:', ', '.join(new_roster_method))
+        return instance
+    return wrapper
+
+
+@create_time
+class MyMath:
+    def __init__(self, max_number: int) -> None:
+        self.max_number = max_number
+
+    def square(self) -> int:
+        number = 100
+        result = 0
+        for _ in range(number + 1):
+            result += sum([i_num ** 2 for i_num in range(self.max_number)])
+
+        return result
+
+    def cube(self, number: int) -> int:
+        result = 0
+        for _ in range(number + 1):
+            result += sum([i_num ** 3 for i_num in range(self.max_number)])
+
+        return result
+
+
+my_func_1 = MyMath(max_number=1000)
+time.sleep(2)
+my_func_2 = MyMath(max_number=3000)
+############################################################
+#Домашка
+import functools
+from datetime import datetime
+from collections.abc import Callable
+
+
+def logging(cls):
+    @functools.wraps(cls)
+    def wrapper(*args, **kwargs):
+        file_log = open('ex.txt', 'a')
+        file_log.write(f'Это {str(cls)} Дата создания: {str(datetime.utcnow())}\n')
+        return file_log
+    return wrapper
+
+
+def for_all_loggins(decorator: Callable) -> Callable:
+    """
+    Декоратор класса.
+    Получает другой декоратор и применяет  его ко всем методам класса.
+    """
+    @functools.wraps(decorator)
+    def decorate(cls):
+        for i_method_name in dir(cls):
+            if i_method_name.startswith('__') is False:
+                cur_method = getattr(cls, i_method_name)
+                decorated_method = decorator(cur_method)
+                setattr(cls, i_method_name, decorated_method)
+        return cls
+    return decorate
+# def decorator(cls): #тоже декорирует всех. аналог
+#     for i_method in dir(cls):
+#         if i_method.startswith('__'):
+#             continue
+#         a = getattr(cls, i_method)
+#         if hasattr(a, '__call__'):
+#             decorated_a = logging(a)
+#             setattr(cls, i_method, decorated_a)
+#     return cls
+
+
+@for_all_loggins(logging)
+class MyHome:
+    def __init__(self, price, name):
+        self.price = price
+        self.name = name
+
+    def windows(self) -> None:
+        pass
+
+    def floors(self) -> None:
+        pass
+
+    def plot_area(self) -> None:
+        pass
+
+
+a = MyHome(price=100000, name='Дачный')
+a.windows()
+a.floors()
+a.plot_area()
+############################################################
+#29.1
+import functools
+from typing import Callable, Any
+
+
+def check_permission(person: str) -> Any:
+    """Декоратор для проверки прав пользователя.
+    Возвращает ошибку или право доступа к функции"""
+    def decorator(func: Callable) -> Callable:
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                if person == ''.join(user_permissions):
+                    return func(*args, **kwargs)
+                raise PermissionError
+            except PermissionError:
+                print('У пользователя недостаточно прав, чтобы выполнить функцию add_comment')
+        return wrapper
+    return decorator
+
+
+user_permissions = ['admin']
+
+
+@check_permission('admin')
+def delete_site():
+    print('Удаляем сайт')
+
+
+@check_permission('user_1')
+def add_comment():
+    print('Добавляем комментарий')
+
+
+delete_site()
+add_comment()
+############################################################
+#29.2
+import functools
+from typing import Callable, Any
+
+
+def callback(url: str) -> Any:
+    """
+    Функция, которая вызывается при срабатывании определённого события:
+    переходе на страницу, получении сообщения или окончании обработки процессором.
+    """
+    def decorator(func: Callable) -> Callable:
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            print(f'Вызвана функция {func.__name__} по url-адресу {url}')
+            result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+
+
+@callback('//')
+def example():
+    print('Пример функции, которая возвращает ответ сервера')
+    return 'OK'
+
+
+app = {'//': example}
+route = app.get('//')
+if route:
+    response = route()
+    print('Ответ:', response)
+else:
+    print('Такого пути нет')
+############################################################
+#29.3
+import time
+from datetime import datetime
+import functools
+
+
+def timer(func, cls, date_time):
+    """
+    Функция timer обёртка от log_methods,
+    которая преобразует дату и фиксирует затраченное время на выполнение методов класса.
+    """
+    @functools.wraps(cls)
+    def wrapper(*args, **kwargs):
+        new_date = ['%' + letter if letter.isalpha() else letter for letter in date_time]
+        new_date_symbol = ''.join(new_date)
+        now = datetime.now()
+        print(f'Запускается {cls.__name__}.{func.__name__}. Дата и время запуска: {now.strftime(new_date_symbol)}.')
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f'Завершение {cls.__name__}.{func.__name__}, время работы = {round(end - start, 3)} s. ')
+        return result
+    return wrapper
+
+
+def log_methods(date_time: str):
+    """
+    Декоратор класса.
+    Получает параметры даты и фиксирует время с помощью функции timer применяет его ко всем методам класса.
+    """
+    def decorate(cls):
+        for i_method_name in dir(cls):
+            if i_method_name.startswith('__') is False:
+                cur_method = getattr(cls, i_method_name)
+                decorated_method = timer(cur_method, cls, date_time)
+                setattr(cls, i_method_name, decorated_method)
+        return cls
+    return decorate
+
+
+@log_methods('b d Y - H:M:S')
+class A:
+    def test_sum_1(self) -> int:
+        print('Тут метод test sum 1')
+        number = 100
+        result = 0
+        for _ in range(number + 1):
+            result += sum([i_num ** 2 for i_num in range(10000)])
+
+        return result
+
+
+@log_methods('b d Y - H:M:S')
+class B(A):
+    def test_sum_1(self):
+        super().test_sum_1()
+        print("Наследник test sum 1")
+
+    def test_sum_2(self):
+        print("Наследник test sum 2")
+        number = 200
+        result = 0
+        for _ in range(number + 1):
+            result += sum([i_num ** 2 for i_num in range(10000)])
+
+        return result
+
+
+my_obj = B()
+my_obj.test_sum_1()
+my_obj.test_sum_2()
+############################################################
+#29.4
+from typing import Callable, Any
+import functools
+
+
+def decorator_with_args_for_any_decorator(decorated_decorator: Callable) -> Callable: # оболочка Декоратора
+    """
+    Декорирует декоратор. Даёт возможность любому декоратору принимать произвольные аргументы.
+    """
+    @functools.wraps(decorated_decorator)  # Декорируемый декоратор
+    def wrapped(*args, **kwargs): # Аргументы от @decorated_decorator(..,аргументы,..)
+        def decorated_decorator(func): # Открывает функцию
+            def wrapper(*decorated_decorator_args, **decorated_decorator_kwargs): # Cодержимое функции
+                print(f'Переданные арги и кварги в декоратор: {args, kwargs}')
+                result = func(*decorated_decorator_args, **decorated_decorator_kwargs) # запускает содержимое функции
+                return result
+            return wrapper
+        return decorated_decorator
+    return wrapped
+
+
+@decorator_with_args_for_any_decorator
+def decorated_decorator(func: Callable) -> Any:
+    """
+    Декоратор функции. Вызывает(декорирует) содержимое функции
+    """
+    @functools.wraps(func)
+    def wrapper(*func_args, **func_kwargs):
+        result = func(*func_args, **func_kwargs)
+        return result
+    return wrapper
+
+
+@decorated_decorator(100, 'рублей', 200, 'друзей')
+def decorated_function(text: str, num: int) -> None:
+    print("Привет", text, num)
+
+
+decorated_function("Юзер", 101)
+############################################################
+#29.4
+import functools
+
+
+def singleton(cls):
+    """ Декоратор класса. Который превращает класс в одноэлементный"""
+    @functools.wraps(cls)
+    def wrapper_singleton(*args, **kwargs):
+        if not wrapper_singleton.instance:
+            wrapper_singleton.instance = cls(*args, **kwargs)
+        return wrapper_singleton.instance
+    wrapper_singleton.instance = None
+    return wrapper_singleton
+
+
+@singleton
+class Example:
+    pass
+
+
+my_obj = Example()
+my_another_obj = Example()
+
+print(id(my_obj))
+print(id(my_another_obj))
+
+############################################################
+#30.4(1)
+grades = [
+    {'name': 'Kenneth', 'score': 3}, {'name': 'Bebe', 'score': 41}, {'name': 'Joyce', 'score': 24},
+    {'name': 'Richard', 'score': 37}, {'name': 'Marian', 'score': 44}, {'name': 'Jana', 'score': 45},
+    {'name': 'Sarah', 'score': 90}, {'name': 'Eddie', 'score': 2}, {'name': 'Mary', 'score': 63},
+    {'name': 'Ronald', 'score': 15}, {'name': 'David', 'score': 44}, {'name': 'Richard', 'score': 78},
+    {'name': 'Warren', 'score': 7}, {'name': 'Alyssa', 'score': 13}, {'name': 'Lloyd', 'score': 52},
+    {'name': 'Vanessa', 'score': 6}, {'name': 'Karen', 'score': 40}, {'name': 'James', 'score': 54},
+    {'name': 'Annie', 'score': 87}, {'name': 'Glenn', 'score': 9}, {'name': 'Bruce', 'score': 68},
+    {'name': 'Ramona', 'score': 64}, {'name': 'Jeannie', 'score': 22}, {'name': 'Aaron', 'score': 3},
+    {'name': 'Ronnie', 'score': 47}, {'name': 'William', 'score': 94}, {'name': 'Sandra', 'score': 40},
+                                        ]
+
+# Решение через key
+print(min(grades, key=lambda elem: elem['score']))
+print(max(grades, key=lambda elem: elem['score']))
+# Вывод исключительно очков:
+print(min(grades, key=lambda elem: elem['score'])['score'])
+print(max(grades, key=lambda elem: elem['score'])['score'])
+############################################################
+#30.4(2)
+class Person:
+
+    def __init__(self, name, age):
+        self._name = name
+        self._age = age
+
+    def __str__(self):
+        return f'Меня зовут {self._name} и мне {self._age}\n'
+
+    @property
+    def age(self):
+        return self._age
+
+    @property
+    def name(self):
+        return self._name
+
+    @age.setter
+    def age(self, other_age):
+        self._age = other_age
+
+    @name.setter
+    def name(self, word):
+        self._name = word
+
+    def __repr__(self):
+        return f"({self._name}, {self._age})"
+
+
+a = Person('Max', 23)
+a.age = 88
+b = Person('Nik', 44)
+c = Person('Lola', 32)
+roster = [a, b, c]
+roster.sort(key=lambda elem: elem.age)
+print(roster)
+roster.sort(key=lambda elem: -elem.age)
+print(roster)
+############################################################
+#30.5(1)
+print(sorted(list(map(int, (number for number in input('Введите числа: ').split(' '))))))
+#
+num = input('Введите цифры: ')
+print(sorted(list(map(lambda x: x, num.split()))))
+#30.5(2)
+text = input('Введите cтроку: ') #qWe456rtY
+print(list(filter(lambda x: x.isalpha() and not x.istitle(), text)))
+#30.5(3)
+from functools import reduce
+
+sentences = ["Nory was a Catholic", "because her mother was a Catholic", "and Nory’s mother was a Catholic",
+             "because her father was a Catholic", "and her father was a Catholic",
+             "because his mother was a Catholic", "or had been"]
+
+w = ' '.join(sentences)
+print(reduce(lambda x, y: w.count('was'), w))
+############################################################
+#pk 30.1
+from typing import List
+from functools import reduce
+
+
+floats: List[float] = [12.3554, 4.02, 5.777, 2.12, 3.13, 4.44, 11.0001]
+names: List[str] = ["Vanes", "Alen", "Jana", "William", "Richards", "Joy"]
+numbers: List[int] = [22, 33, 10, 6894, 11, 2, 1]
+
+if __name__ == "__main__":
+    result_float = list(map(lambda x: round(x**3, 3), floats))
+    print(result_float)
+
+    result_names = list(filter(lambda x: len(x) > 4, names))
+    print(result_names)
+
+    result_numbers = reduce(lambda x, y: x * y, numbers)
+    print(result_numbers)
+
+############################################################
+#pk 30.2
+from typing import List
+
+
+letters: List[str] = ['a', 'b', 'c', 'd', 'e']
+numbers: List[int] = [1, 2, 3, 4, 5, 6, 7, 8]
+
+result = list(map(lambda x, y: tuple(x + str(y)), letters, numbers))
+print(result)
+############################################################
+#pk 30.3
+
+
+############################################################
+# 31dz
+import re
+
+text = 'How much wood would a woodchuck chuck if a woodchuck could chuck wood?'
+result = re.match(r'wo', text)
+print('Определить, начинается ли текст с шаблона wo (Поиск шаблона в начале строки):', result)
+result_1 = re.search(r'wo', text)
+print('Поиск первого найденного совпадения по шаблону:', result_1)
+print('Содержимое найденной подстроки:', result_1.group(0))
+print('Начальная позиция:', result_1.start())
+print('Конечная позиция:', result_1.end())
+result_2 = re.findall(r'wo', text)
+print('Список всех упоминаний шаблона:', result_2)
+result_3 = re.sub(r'wo', 'ЗАМЕНА', text)
+print('Текст после замены:', result_3)
+############################################################
+# 31dz
+import re
+
+text = 'How much \wwood+?, would a \wwood+?chuck \dwwood+, chuck if a \wwood+?,chuck could chuck \wwood?,'
+result_2 = re.findall(r'\\wwood\+\?', text) #Добавляем слэши чтобы результат стал таким: ['\\wwood+?,', '\\wwood+?,']
+print('Список всех упоминаний шаблона:', result_2)
+############################################################
+# 31dz
+import re
+#Первый содержит все слова, которые начинаются на гласную букву латинского алфавита
+# (в этот раз слово может состоять и из одной буквы, например I).
+text = 'Even if they are djinns, I will get djinns that can outdjinn them.'
+result = re.findall(r'\b[euioaEUIOA]\w*', text) # Выводит все слова на гласную букву(есть шпоргалка)
+print(result)
+############################################################
+# 31dz
+
+import re
+# Второй содержит слова, которые начинаются на любой символ, кроме гласных букв латинского алфавита.
+text = 'Even if they are djinns, I will get djinns that can outdjinn them.'
+result = re.findall(r'\b[rtpsdfghjklzxcvbnm]\w+', text) # Выводит все слова на гласную букву(есть шпоргалка)
+print(result)
+
+############################################################
+# 31dz
+import re
+
+text = 'Amit 34-3456 12-05-2007, XYZ 56-4532 11-11-2011, ABC 67-8945 12-01-2009'
+result = re.findall(r'\d{2}-\d{2}-\d{4}', text) # Выводит все слова на гласную букву(есть шпоргалка)
+print(result) # ['12-05-2007', '11-11-2011', '12-01-2009']
+
+############################################################
+# 31dz
+import requests
+import json
+
+my_test = requests.get('https://swapi.dev/api/people/4/')
+
+data = json.loads(my_test.text) # десериализация JSON
+data['name'] = 'BULL'
+print(data)
+
+with open('ser.json', 'w') as file:
+    json.dump(data, file, indent=4) # сериализация JSON
+
+
+with open('ser.json', 'r') as file:
+    data = json.load(file) #Здесь load, а НЕ loasds, потому что работаем с файлом
+
+print(data['films'])
+
+############################################################
+# 31dz
+import swapi #$ pip install swapi
+
+# print(swapi.get_film(1))
+# Сейчас библиотека не работает, получить начало сюжета можно напрямую
+
+result = requests.get("https://swapi.dev/api/films/1/")
+json_dict = json.loads(result.text)
+print(json_dict["opening_crawl"])
+
+############################################################
+# 31pk1
+import re
+
+text = """ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
+nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. 
+Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate 
+"""
+
+result = re.findall(r'\b\w{4}\b', text)
+print(result)
+############################################################
+# 31pk2
+import re
+
+text = """ А578ВЕ777 ОР233787 К901МН666 СТ46599 СНИ2929П777 666АМР666"""
+
+private_auto = re.findall(r'\b[АВЕКМНОРСТУХ]\d{3}\w+', text)
+print(f'Список номеров частных автомобилей: {private_auto}')
+
+taxi = re.findall(r'\b[АВЕКМНОРСТУХ]{2}\d+', text)
+print(f'Список номеров такси: {taxi}')
+############################################################
+# 31pk3
+# РЕШЕНИЕ В 2 способа, ТЗ несло мало ясности
+
+import requests
+import json
+
+starships_attribute = ["name", "max_atmosphering_speed", "starship_class", "pilots"]# необходимые искомые атрибуты корабля
+pilots_attribute = ["name", "height", "mass", "homeworld", "url"]# необходимые искомые атрибуты пилота
+
+my_starships = requests.get('https://swapi.dev/api/starships/?search=Millennium')
+# ищем корабль Millennium Falcon
+roster = json.loads(my_starships.text) # десериализация JSON
+my_starships = roster["results"]
+
+data_starships = [{key: value} for attribute in my_starships for key, value in attribute.items()
+                  if key in starships_attribute] # атрибуты корабля
+pilot_attribute = [json.loads(requests.get(attribute).text) for attribute in data_starships[3]['pilots']]
+# ccылки на пилотов проверяем на Respone 200 и загружаем в текст
+
+data_pilot = [{key: value} for attribute in pilot_attribute for key, value in attribute.items()
+              if key in pilots_attribute]# атрибуты пилотов
+
+data_starships.extend(data_pilot)
+
+with open('ser.json', 'w') as file:
+    json.dump(data_starships, file, indent=4)
+# сериализация
+
+with open('ser.json', 'r') as file:
+    data = json.load(file) # Здесь load, а НЕ loasds, потому что работаем с файлом
+
+for param in data:
+    print(param)
+
+##########################################
+#Второй способ
+
+ship_name = "Millennium Falcon"  # название корабля, для которого получаем информацию
+# делаем запрос на получение информации о корабле
+ship_url = "https://swapi.dev/api/starships/?search=" + ship_name
+ship_response = requests.get(ship_url)
+ship_data = json.loads(ship_response.text)
+# получаем ссылку на один корабль из ответа на запрос
+
+ship_api_url = ship_data["results"][0]["url"]
+ship_api_response = requests.get(ship_api_url)
+ship_api_data = json.loads(ship_api_response.text)
+
+# информация о корабле
+ship_info = {
+    "название": ship_api_data["name"],
+    "максимальная скорость": ship_api_data["max_atmosphering_speed"],
+    "класс": ship_api_data["starship_class"],
+    "список пилотов": []
+            }
+# получаем информацию о пилотах из ссылок в ответе на запрос для корабля
+for pilot_url in ship_api_data["pilots"]:
+    pilot_api_response = requests.get(pilot_url)
+    pilot_api_data = json.loads(pilot_api_response.text)
+    # информация о каждом пилоте
+    pilot_info = {
+        "имя": pilot_api_data["name"],
+        "рост": pilot_api_data["height"],
+        "вес": pilot_api_data["mass"],
+        "родная планета": pilot_api_data["homeworld"],
+        "ссылка на информацию о родной планете": pilot_api_data["homeworld"]
+    }
+    ship_info["список пилотов"].append(pilot_info)
+# вывод информации о корабле и пилотах в консоль
+print(json.dumps(ship_info, indent=4, ensure_ascii=False))
+# запись информации о корабле и пилотах в JSON-файл
+with open("ship_info.json", "w", encoding="utf-8") as file:
+    json.dump(ship_info, file, indent=4, ensure_ascii=False)
+############################################################
+# 31pk4
+import re
+
+roster = ['9999999999', '999999-999', '99999x9999']
+word_number = ['первый', 'второй', 'третий', 'четвертый', 'пятый', 'шестой']
+
+for index_word, number in enumerate(roster):
+    if re.findall(r'[8-9]\d{9}', number):
+        print(f'{word_number[index_word]} номер: всё в порядке')
+    else:
+        print(f'{word_number[index_word]} номер: не подходит')
+############################################################
+# 31pk5
+import re
+
+# В данном случае запрос request.get заменен на загрзку сайта из файла html
+with open('examples.html', 'r') as file:
+    text = file.read()
+# По итогу вы так же получаете код сайта в виде одной строки
+
+result = re.findall(r'<h3>(.*?)</h3>', text)
+print(result)
+############################################################
+# 31pk6
+import json
+
+
+diff_list = ['services', 'staff', 'datetime']
+with open('json_new.json', 'r') as file_json_new:
+    roster_new = json.load(file_json_new)
+
+with open('json_old.json', 'r') as file_json_old:
+    roster_old = json.load(file_json_old)
+
+result = {key: roster_new['data'][key] for key in diff_list if roster_new['data'][key] != roster_old['data'][key]}
+
+print(result)
+with open('result.json.', 'w') as file_result:
+    json.dump(result, file_result, indent=4)
